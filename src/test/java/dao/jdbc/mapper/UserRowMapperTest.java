@@ -1,6 +1,7 @@
 package dao.jdbc.mapper;
 
-import entity.User;
+import com.bondarenko.onlineshop.dao.jdbc.mapper.UserRowMapper;
+import com.bondarenko.onlineshop.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

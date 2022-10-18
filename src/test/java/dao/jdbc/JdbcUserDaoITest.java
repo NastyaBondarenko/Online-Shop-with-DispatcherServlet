@@ -1,6 +1,7 @@
 package dao.jdbc;
 
-import entity.User;
+import com.bondarenko.onlineshop.dao.jdbc.JdbcUserDao;
+import com.bondarenko.onlineshop.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,10 +1,11 @@
 package security;
 
-import dao.jdbc.JdbcUserDao;
+import com.bondarenko.onlineshop.dao.jdbc.JdbcUserDao;
+import com.bondarenko.onlineshop.security.SecurityService;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.UserService;
+import com.bondarenko.onlineshop.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
