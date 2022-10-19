@@ -2,8 +2,8 @@ package com.bondarenko.onlineshop.service;
 
 import com.bondarenko.onlineshop.dao.UserDao;
 import com.bondarenko.onlineshop.entity.User;
-import jakarta.servlet.http.Cookie;
 
+import javax.servlet.http.Cookie;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
