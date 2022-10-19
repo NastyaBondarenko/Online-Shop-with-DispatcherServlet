@@ -23,6 +23,7 @@ public class ServiceLocator {
 
         REGISTRY.put("userService", userService);
         REGISTRY.put("productService", productService);
+        REGISTRY.put("securityService", securityService);
     }
 
     public static Object getService(String serviceName) {

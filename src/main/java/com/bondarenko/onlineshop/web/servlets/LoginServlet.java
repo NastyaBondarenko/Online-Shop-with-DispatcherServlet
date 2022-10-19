@@ -1,5 +1,6 @@
 package com.bondarenko.onlineshop.web.servlets;
 
+import com.bondarenko.onlineshop.ServiceLocator;
 import com.bondarenko.onlineshop.security.SecurityService;
 import com.bondarenko.onlineshop.web.util.PageGenerator;
 
@@ -11,11 +12,8 @@ import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
 
-    private final SecurityService securityService;
-
-    public LoginServlet(SecurityService securityService) {
-        this.securityService = securityService;
-    }
+    private SecurityService securityService =
+            (SecurityService) ServiceLocator.getService("securityService");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
