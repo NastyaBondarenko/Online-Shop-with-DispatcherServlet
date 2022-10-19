@@ -1,5 +1,6 @@
 package com.bondarenko.onlineshop.web.servlets;
 
+import com.bondarenko.onlineshop.ServiceLocator;
 import com.bondarenko.onlineshop.service.ProductService;
 import com.bondarenko.onlineshop.web.util.PageGenerator;
 
@@ -11,11 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DeleteProductServlet extends HttpServlet {
-    private final ProductService productService;
 
-    public DeleteProductServlet(ProductService productService) {
-        this.productService = productService;
-    }
+    private ProductService productService =
+            (ProductService) ServiceLocator.getService("productService");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
