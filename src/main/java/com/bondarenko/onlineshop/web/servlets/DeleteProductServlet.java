@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DeleteProductServlet extends HttpServlet {
-
     private ProductService productService =
             (ProductService) ServiceLocator.getService("productService");
 

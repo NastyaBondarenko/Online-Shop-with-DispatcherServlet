@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class AllProductsServlet extends HttpServlet {
-
     private ProductService productService =
             (ProductService) ServiceLocator.getService("productService");
 
