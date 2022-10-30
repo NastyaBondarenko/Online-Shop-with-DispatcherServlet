@@ -2,16 +2,16 @@ package com.bondarenko.onlineshop.service;
 
 import com.bondarenko.onlineshop.dao.ProductDao;
 import com.bondarenko.onlineshop.entity.Product;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Setter
+@Getter
 public class ProductService {
-    private final ProductDao productDao;
-
-    public ProductService(ProductDao productDao) {
-        this.productDao = productDao;
-    }
+    private ProductDao productDao;
 
     public void add(Product product) {
         LocalDateTime now = LocalDateTime.now();

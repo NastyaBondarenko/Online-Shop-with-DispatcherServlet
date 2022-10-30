@@ -3,15 +3,19 @@ package com.bondarenko.onlineshop.dao.jdbc;
 import com.bondarenko.onlineshop.dao.UserDao;
 import com.bondarenko.onlineshop.dao.jdbc.mapper.UserRowMapper;
 import com.bondarenko.onlineshop.entity.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Setter
+@Getter
 public class JdbcUserDao implements UserDao {
-    private final ConnectionFactory connectionFactory = new ConnectionFactory();
-    private final UserRowMapper userRowMapper = new UserRowMapper();
+    private ConnectionFactory connectionFactory;
+    private UserRowMapper userRowMapper;
 
     private static final String FIND_USER_SQL = "SELECT id, login, password, salt FROM users WHERE login=?";
 

@@ -2,21 +2,22 @@ package com.bondarenko.onlineshop.service;
 
 import com.bondarenko.onlineshop.dao.UserDao;
 import com.bondarenko.onlineshop.entity.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.servlet.http.Cookie;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Setter
+@Getter
 public class UserService {
-    private final UserDao userDao;
+    private UserDao userDao;
     private final List<String> userTokens = new ArrayList<>();
 
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
     public User findUser(String login) {
+
         return userDao.findUser(login);
     }
 

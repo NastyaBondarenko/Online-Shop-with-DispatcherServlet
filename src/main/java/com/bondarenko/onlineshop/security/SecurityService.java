@@ -1,18 +1,18 @@
 package com.bondarenko.onlineshop.security;
 
 import com.bondarenko.onlineshop.entity.User;
-import org.apache.commons.codec.digest.DigestUtils;
 import com.bondarenko.onlineshop.service.UserService;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
+@Setter
 public class SecurityService {
-    private final UserService userService;
-
-    public SecurityService(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     public String encryptPasswordWithSalt(String password, String login) {
         String salt = getSalt(login);

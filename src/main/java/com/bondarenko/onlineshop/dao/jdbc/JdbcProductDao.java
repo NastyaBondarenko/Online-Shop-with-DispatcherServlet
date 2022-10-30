@@ -3,15 +3,24 @@ package com.bondarenko.onlineshop.dao.jdbc;
 import com.bondarenko.onlineshop.dao.ProductDao;
 import com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper;
 import com.bondarenko.onlineshop.entity.Product;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 public class JdbcProductDao implements ProductDao {
 
-    private final ConnectionFactory connectionFactory = new ConnectionFactory();
-    private final ProductRowMapper productRowMapper = new ProductRowMapper();
+    private ConnectionFactory connectionFactory;
+    private ProductRowMapper productRowMapper;
 
     private static final String FIND_ALL_SQL = "SELECT id, name, price, creation_date FROM products;";
     private static final String ADD_SQL = "INSERT INTO products (name, price, creation_date) VALUES (?,?,?);";

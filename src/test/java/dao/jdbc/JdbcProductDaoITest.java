@@ -2,6 +2,7 @@ package dao.jdbc;
 
 import com.bondarenko.onlineshop.dao.jdbc.JdbcProductDao;
 import com.bondarenko.onlineshop.entity.Product;
+import com.study.ioc.context.impl.GenericApplicationContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JdbcProductDaoITest {
-    private final JdbcProductDao jdbcProductDao = new JdbcProductDao();
+
+    private final GenericApplicationContext genericApplicationContext = new GenericApplicationContext("context.xml");
+    private JdbcProductDao jdbcProductDao = JdbcProductDao.class.cast(genericApplicationContext.getBean("jdbcProductDao"));
 
     @Test
     @DisplayName("when FindAll then Return Not Null Data")

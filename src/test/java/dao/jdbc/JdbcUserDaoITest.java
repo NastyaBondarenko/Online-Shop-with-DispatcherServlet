@@ -2,6 +2,7 @@ package dao.jdbc;
 
 import com.bondarenko.onlineshop.dao.jdbc.JdbcUserDao;
 import com.bondarenko.onlineshop.entity.User;
+import com.study.ioc.context.impl.GenericApplicationContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JdbcUserDaoITest {
-    private final JdbcUserDao jdbcUserDao = new JdbcUserDao();
+    private final GenericApplicationContext genericApplicationContext = new GenericApplicationContext("context.xml");
+    private JdbcUserDao jdbcUserDao = JdbcUserDao.class.cast(genericApplicationContext.getBean("jdbcUserDao"));
+
 
     @Test
     @DisplayName("find User when User Exist then Data Return")
