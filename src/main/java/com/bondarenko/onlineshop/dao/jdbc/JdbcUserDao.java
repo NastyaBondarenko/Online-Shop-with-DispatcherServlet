@@ -16,9 +16,7 @@ import java.sql.SQLException;
 @Getter
 public class JdbcUserDao implements UserDao {
     private DataSource dataSource;
-
     private UserRowMapper userRowMapper;
-
     private static final String FIND_USER_SQL = "SELECT id, login, password, salt FROM users WHERE login=?";
 
     @Override
