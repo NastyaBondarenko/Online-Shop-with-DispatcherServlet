@@ -1,6 +1,6 @@
 package com.bondarenko.onlineshop.web.servlets;
 
-import com.bondarenko.onlineshop.web.util.ServiceLocator;
+import com.bondarenko.onlineshop.web.util.context.ApplicationContext;
 import com.bondarenko.onlineshop.entity.Product;
 import com.bondarenko.onlineshop.service.ProductService;
 import com.bondarenko.onlineshop.web.util.PageGenerator;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class AllProductsServlet extends HttpServlet {
     private ProductService productService =
-            (ProductService) ServiceLocator.getService("productService");
+            (ProductService) ApplicationContext.getService("productService");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {

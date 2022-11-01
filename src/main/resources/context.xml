@@ -1,17 +1,24 @@
 <beans>
+    <bean id="beanFactoryPostProcessor" class="com.bondarenko.onlineshop.dao.jdbc.DefaultPropertyPlaceholder"/>
+
+    <bean id="pgSimpleDataSource" class="org.postgresql.ds.PGSimpleDataSource">
+        <property name="user" value="${db.user}"/>
+        <property name="password" value="${db.pass}"/>
+        <property name="databaseName" value="${db.databaseName}"/>
+        <property name="portNumber" value="${db.portNumber}"/>
+    </bean>
+
     <bean id="productRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper"/>
 
     <bean id="userRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.UserRowMapper"/>
 
-    <bean id="сonnectionFactory" class="com.bondarenko.onlineshop.dao.jdbc.ConnectionFactory"/>
-
     <bean id="jdbcProductDao" class="com.bondarenko.onlineshop.dao.jdbc.JdbcProductDao">
-        <property name="connectionFactory" ref="сonnectionFactory"/>
+        <property name="dataSource" ref="pgSimpleDataSource"/>
         <property name="productRowMapper" ref="productRowMapper"/>
     </bean>
 
     <bean id="jdbcUserDao" class="com.bondarenko.onlineshop.dao.jdbc.JdbcUserDao">
-        <property name="connectionFactory" ref="сonnectionFactory"/>
+        <property name="dataSource" ref="pgSimpleDataSource"/>
         <property name="userRowMapper" ref="userRowMapper"/>
     </bean>
 

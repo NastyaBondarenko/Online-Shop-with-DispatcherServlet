@@ -1,8 +1,8 @@
 package com.bondarenko.onlineshop.web.servlets;
 
-import com.bondarenko.onlineshop.web.util.ServiceLocator;
 import com.bondarenko.onlineshop.security.SecurityService;
 import com.bondarenko.onlineshop.web.util.PageGenerator;
+import com.bondarenko.onlineshop.web.util.context.ApplicationContext;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +13,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     private SecurityService securityService =
-            (SecurityService) ServiceLocator.getService("securityService");
+            (SecurityService) ApplicationContext.getService("securityService");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -1,7 +1,7 @@
 package com.bondarenko.onlineshop.web.security;
 
-import com.bondarenko.onlineshop.web.util.ServiceLocator;
 import com.bondarenko.onlineshop.service.UserService;
+import com.bondarenko.onlineshop.web.util.context.ApplicationContext;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
@@ -14,7 +14,7 @@ import java.util.List;
 public class SecurityFilter implements Filter {
 
     private UserService userService =
-            (UserService) ServiceLocator.getService("userService");
+            (UserService) ApplicationContext.getService("userService");
     private final List<String> allowedPath = List.of("/login");
 
     @Override

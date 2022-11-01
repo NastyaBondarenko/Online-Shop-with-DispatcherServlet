@@ -1,10 +1,10 @@
-package com.bondarenko.onlineshop.web.util;
+package com.bondarenko.onlineshop.web.util.context;
 
 import com.study.ioc.context.impl.GenericApplicationContext;
 import lombok.Setter;
 
 @Setter
-public class ServiceLocator {
+public class ApplicationContext {
     private static GenericApplicationContext genericApplicationContext;
 
     static {
