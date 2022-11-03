@@ -25,7 +25,8 @@
         <property name="suffix" value=".html"/>
     </bean>
 
-    <bean id="applicationContextProvider" class="com.bondarenko.onlineshop.web.util.context.context.ApplicationContextImpl"/>
+    <bean id="applicationContextProvider"
+          class="com.bondarenko.onlineshop.web.util.context.context.ApplicationContextImpl"/>
 
     <bean id="pgSimpleDataSource" class="org.postgresql.ds.PGSimpleDataSource">
         <property name="user" value="${db.user}"/>
@@ -58,10 +59,3 @@
         <property name="userService" ref="userService"/>
     </bean>
 </beans>
-
-
-        <!--    <bean id="applicationContextProvider"-->
-        <!--          class="com.bondarenko.onlineshop.web.util.context.context.ApplicationContextImpl"/>-->
-
-        <!--        <bean id="applicationContextProvider"-->
-        <!--              class="com.bondarenko.onlineshop.web.util.context.context.ApplicationContextImpl"/>-->
