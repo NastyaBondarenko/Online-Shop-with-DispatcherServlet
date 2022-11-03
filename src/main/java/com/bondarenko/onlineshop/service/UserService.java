@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Setter
-@Getter
 public class UserService {
     private UserDao userDao;
     private final List<String> userTokens = new ArrayList<>();

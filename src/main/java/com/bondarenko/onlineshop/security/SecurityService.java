@@ -9,7 +9,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.util.Objects;
 import java.util.UUID;
 
-@Getter
 @Setter
 public class SecurityService {
     private UserService userService;

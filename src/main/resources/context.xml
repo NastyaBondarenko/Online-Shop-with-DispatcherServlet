@@ -33,4 +33,5 @@
     <bean id="securityService" class="com.bondarenko.onlineshop.security.SecurityService">
         <property name="userService" ref="userService"/>
     </bean>
+
 </beans>

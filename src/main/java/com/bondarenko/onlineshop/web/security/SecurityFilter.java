@@ -1,8 +1,9 @@
 package com.bondarenko.onlineshop.web.security;
 
 import com.bondarenko.onlineshop.service.UserService;
-import com.bondarenko.onlineshop.web.util.context.ApplicationContext;
+import com.bondarenko.onlineshop.web.util.context.ServiceLocator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +13,10 @@ import java.util.List;
 
 @Slf4j
 public class SecurityFilter implements Filter {
-
-    private UserService userService =
-            (UserService) ApplicationContext.getService("userService");
+//    @Autowired
+//    private UserService userService;
+        private UserService userService =
+            (UserService) ServiceLocator.getService("userService");
     private final List<String> allowedPath = List.of("/login");
 
     @Override

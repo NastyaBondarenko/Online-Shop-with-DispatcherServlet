@@ -4,7 +4,7 @@ import com.study.ioc.context.impl.GenericApplicationContext;
 import lombok.Setter;
 
 @Setter
-public class ApplicationContext {
+public class ServiceLocator {
     private static GenericApplicationContext genericApplicationContext;
 
     static {
