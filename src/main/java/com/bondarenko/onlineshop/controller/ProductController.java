@@ -2,25 +2,21 @@ package com.bondarenko.onlineshop.controller;
 
 import com.bondarenko.onlineshop.entity.Product;
 import com.bondarenko.onlineshop.service.ProductService;
-import com.bondarenko.onlineshop.web.util.context.ServiceLocator;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Slf4j
 @Controller
 public class ProductController {
-
-    private ProductService productService =
-            (ProductService) ServiceLocator.getService("productService");
+    @Autowired
+    private ProductService productService;
 
     @GetMapping({"/products", "/*"})
     protected String getAll(Model model) {
@@ -34,7 +30,7 @@ public class ProductController {
         return "add_product";
     }
 
-    @PostMapping("/products/add")// replace
+    @PostMapping("/products/add")
     protected String add(@RequestParam String name, @RequestParam double price) {
         Product product = Product.builder().
                 name(name)
@@ -69,22 +65,13 @@ public class ProductController {
     }
 
     @PostMapping("/products/update")
-    protected String update(HttpServletRequest request, HttpServletResponse response) {
-
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        int price = Integer.parseInt(request.getParameter("price"));
-        LocalDateTime creation_date = LocalDateTime.parse(request.getParameter("creation_date"));
-
-        Product product = new Product(id, name, price, creation_date);
-        productService.update(product);
+    protected String update(@ModelAttribute Product product, @RequestParam String creation_date) {
+        LocalDateTime date = LocalDateTime.parse(creation_date);
+        Product newProduct = new Product(product.getId(), product.getName(), product.getPrice(), date);
+        productService.update(newProduct);
         return "redirect:/products";
     }
 }
 
-//    @PostMapping("/products/update")
-//    protected String update(@ModelAttribute Product product) {
-//        productService.update(product);
-//        return "redirect:/products";
-//    }
+
 

@@ -1,7 +1,6 @@
 package com.bondarenko.onlineshop.controller;
 
 import com.bondarenko.onlineshop.security.SecurityService;
-import com.bondarenko.onlineshop.web.util.context.ServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class LoginController {
-//    @Autowired
-//        private SecurityService securityService =
-    private SecurityService securityService =
-            (SecurityService) ServiceLocator.getService("securityService");
+    @Autowired
+    private SecurityService securityService;
 
     @GetMapping("/login")
     protected String getLoginPage() {
@@ -24,8 +21,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    protected String login(@RequestParam String login,
-                           @RequestParam String password, HttpServletResponse response) {
+    protected String login(@RequestParam String login, @RequestParam String password, HttpServletResponse response) {
         String token = securityService.login(login, password);
         if (token != null) {
             response.addCookie(new Cookie("user-token", token));

@@ -1,13 +1,13 @@
 package com.bondarenko.onlineshop.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@Setter
+@Getter
 @Builder
 public class Product {
     private int id;

@@ -1,37 +1,37 @@
-<beans>
-    <bean id="beanFactoryPostProcessor" class="com.bondarenko.onlineshop.dao.jdbc.DefaultPropertyPlaceholder"/>
+<!--<beans>-->
+<!--    <bean id="beanFactoryPostProcessor" class="com.bondarenko.onlineshop.dao.jdbc.DefaultPropertyPlaceholder"/>-->
 
-    <bean id="pgSimpleDataSource" class="org.postgresql.ds.PGSimpleDataSource">
-        <property name="user" value="${db.user}"/>
-        <property name="password" value="${db.pass}"/>
-        <property name="databaseName" value="${db.databaseName}"/>
-        <property name="portNumber" value="${db.portNumber}"/>
-    </bean>
+<!--    <bean id="pgSimpleDataSource" class="org.postgresql.ds.PGSimpleDataSource">-->
+<!--        <property name="user" value="${db.user}"/>-->
+<!--        <property name="password" value="${db.pass}"/>-->
+<!--        <property name="databaseName" value="${db.databaseName}"/>-->
+<!--        <property name="portNumber" value="${db.portNumber}"/>-->
+<!--    </bean>-->
 
-    <bean id="productRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper"/>
+<!--    <bean id="productRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper"/>-->
 
-    <bean id="userRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.UserRowMapper"/>
+<!--    <bean id="userRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.UserRowMapper"/>-->
 
-    <bean id="jdbcProductDao" class="com.bondarenko.onlineshop.dao.jdbc.JdbcProductDao">
-        <property name="dataSource" ref="pgSimpleDataSource"/>
-        <property name="productRowMapper" ref="productRowMapper"/>
-    </bean>
+<!--    <bean id="jdbcProductDao" class="com.bondarenko.onlineshop.dao.jdbc.JdbcProductDao">-->
+<!--        <property name="dataSource" ref="pgSimpleDataSource"/>-->
+<!--        <property name="productRowMapper" ref="productRowMapper"/>-->
+<!--    </bean>-->
 
-    <bean id="jdbcUserDao" class="com.bondarenko.onlineshop.dao.jdbc.JdbcUserDao">
-        <property name="dataSource" ref="pgSimpleDataSource"/>
-        <property name="userRowMapper" ref="userRowMapper"/>
-    </bean>
+<!--    <bean id="jdbcUserDao" class="com.bondarenko.onlineshop.dao.jdbc.JdbcUserDao">-->
+<!--        <property name="dataSource" ref="pgSimpleDataSource"/>-->
+<!--        <property name="userRowMapper" ref="userRowMapper"/>-->
+<!--    </bean>-->
 
-    <bean id="productService" class="com.bondarenko.onlineshop.service.ProductService">
-        <property name="productDao" ref="jdbcProductDao"/>
-    </bean>
+<!--    <bean id="productService" class="com.bondarenko.onlineshop.service.ProductService">-->
+<!--        <property name="productDao" ref="jdbcProductDao"/>-->
+<!--    </bean>-->
 
-    <bean id="userService" class="com.bondarenko.onlineshop.service.UserService">
-        <property name="userDao" ref="jdbcUserDao"/>
-    </bean>
+<!--    <bean id="userService" class="com.bondarenko.onlineshop.service.UserService">-->
+<!--        <property name="userDao" ref="jdbcUserDao"/>-->
+<!--    </bean>-->
 
-    <bean id="securityService" class="com.bondarenko.onlineshop.security.SecurityService">
-        <property name="userService" ref="userService"/>
-    </bean>
+<!--    <bean id="securityService" class="com.bondarenko.onlineshop.security.SecurityService">-->
+<!--        <property name="userService" ref="userService"/>-->
+<!--    </bean>-->
 
-</beans>
+<!--</beans>-->

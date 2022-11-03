@@ -5,12 +5,14 @@ import com.bondarenko.onlineshop.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Setter
 public class SecurityService {
+    @Autowired
     private UserService userService;
 
     public String encryptPasswordWithSalt(String password, String login) {

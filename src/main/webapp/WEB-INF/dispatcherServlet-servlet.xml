@@ -11,15 +11,12 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:property-placeholder location="classpath:application.properties"/>
     <context:component-scan base-package="com.bondarenko"/>
-    <context:component-scan base-package="com.bondarenko.onlineshop.web.security"/>
-
-
-
-
+    <mvc:annotation-driven/>
 
     <bean id="freemarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property  name="templateLoaderPath" value="classpath:templates/pages/"/>
+        <property name="templateLoaderPath" value="classpath:templates/pages/"/>
     </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
@@ -28,6 +25,43 @@
         <property name="suffix" value=".html"/>
     </bean>
 
+    <bean id="applicationContextProvider" class="com.bondarenko.onlineshop.web.util.context.context.ApplicationContextImpl"/>
 
+    <bean id="pgSimpleDataSource" class="org.postgresql.ds.PGSimpleDataSource">
+        <property name="user" value="${db.user}"/>
+        <property name="password" value="${db.pass}"/>
+        <property name="databaseName" value="${db.databaseName}"/>
+        <property name="portNumber" value="${db.portNumber}"/>
+    </bean>
+    <bean id="productRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper"/>
+    <bean id="userRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.UserRowMapper"/>
 
+    <bean id="jdbcProductDao" class="com.bondarenko.onlineshop.dao.jdbc.JdbcProductDao">
+        <property name="dataSource" ref="pgSimpleDataSource"/>
+        <property name="productRowMapper" ref="productRowMapper"/>
+    </bean>
+
+    <bean id="jdbcUserDao" class="com.bondarenko.onlineshop.dao.jdbc.JdbcUserDao">
+        <property name="dataSource" ref="pgSimpleDataSource"/>
+        <property name="userRowMapper" ref="userRowMapper"/>
+    </bean>
+
+    <bean id="productService" class="com.bondarenko.onlineshop.service.ProductService">
+        <property name="productDao" ref="jdbcProductDao"/>
+    </bean>
+
+    <bean id="userService" class="com.bondarenko.onlineshop.service.UserService">
+        <property name="userDao" ref="jdbcUserDao"/>
+    </bean>
+
+    <bean id="securityService" class="com.bondarenko.onlineshop.security.SecurityService">
+        <property name="userService" ref="userService"/>
+    </bean>
 </beans>
+
+
+        <!--    <bean id="applicationContextProvider"-->
+        <!--          class="com.bondarenko.onlineshop.web.util.context.context.ApplicationContextImpl"/>-->
+
+        <!--        <bean id="applicationContextProvider"-->
+        <!--              class="com.bondarenko.onlineshop.web.util.context.context.ApplicationContextImpl"/>-->
