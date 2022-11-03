@@ -1,84 +1,87 @@
-//package dao.jdbc;
-//
-//import com.bondarenko.onlineshop.dao.jdbc.JdbcProductDao;
-//import com.bondarenko.onlineshop.entity.Product;
-//import com.bondarenko.onlineshop.web.util.context.context.ApplicationContextImpl;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//
-//import java.time.LocalDateTime;
-//import java.util.List;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-////@ContextConfiguration(classes = {ApplicationContextImpl.class})
-////@WebAppConfiguration(value ="src/main/webapp/WEB-INF/dispatcherServlet-servlet.xml" )
-//public class JdbcProductDaoITest {
-////    private JdbcProductDao jdbcProductDao = ApplicationContextImpl.getApplicationContext().getBean(JdbcProductDao.class);
-//
-//    @Test
-//    @DisplayName("when FindAll then Return Not Null Data")
-//    public void whenFindAll_thenReturnNotNullData() {
-//        List<Product> products = jdbcProductDao.findAll();
-//        assertFalse(products.isEmpty());
-//        for (Product product : products) {
-//            assertNotNull(product.getId());
-//            assertNotNull(product.getName());
-//            assertNotNull(product.getPrice());
-//            assertNotNull(product.getCreationDate());
-//        }
-//    }
-//
-//    @Test
-//    @DisplayName("when FindAll then Return  Is Not Null")
-//    void whenFindAll_thenSize_isNotNull() {
-//        List<Product> products = jdbcProductDao.findAll();
-//        assertNotNull(products.size());
-//    }
-//
-//    @Test
-//    @DisplayName("when Add then Size Of List Increase By One")
-//    void whenAdd_thenSizeOfListIncreaseByOne() {
-//        Product newProduct = Product.builder().
-//                name("snowboard").
-//                price(3000.00).
-//                creationDate(LocalDateTime.now())
-//                .build();
-//        int sizeBeforeAdd = jdbcProductDao.findAll().size();
-//        jdbcProductDao.add(newProduct);
-//
-//        int sizeAfterAdd = jdbcProductDao.findAll().size();
-//        assertEquals(sizeBeforeAdd + 1, sizeAfterAdd);
-//    }
-//
-//    @Test
-//    @DisplayName("when Search New Product By Name then List With Searched Product is Not Empty")
-//    void whenSearchNewProductByName_thenListWithSearchedProduct_isNotEmpty() {
-//        Product newProduct = Product.builder().
-//                name("new_snowboard").
-//                price(3000.00).
-//                creationDate(LocalDateTime.now())
-//                .build();
-//        jdbcProductDao.add(newProduct);
-//
-//        List<Product> listWithSearchedProduct = jdbcProductDao.search("snowboard");
-//        assertNotNull(listWithSearchedProduct);
-//    }
-//
-//    @Test
-//    @DisplayName("when Update then Size Of List does Not Change")
-//    void whenUpdate_thenSizeOfList_doesNotChange() {
-//        Product newProduct = Product.builder().
-//                name("snowboard").
-//                price(3000.00).
-//                creationDate(LocalDateTime.now())
-//                .build();
-//        jdbcProductDao.add(newProduct);
-//
-//        int sizeBeforeUpdate = jdbcProductDao.findAll().size();
-//        jdbcProductDao.update(newProduct);
-//        int sizeAfterUpdate = jdbcProductDao.findAll().size();
-//
-//        assertEquals(sizeBeforeUpdate, sizeAfterUpdate);
-//    }
-//}
+package dao.jdbc;
+
+import com.bondarenko.onlineshop.dao.jdbc.JdbcProductDao;
+import com.bondarenko.onlineshop.entity.Product;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringJUnitWebConfig
+@ContextConfiguration(locations = "classpath:WEB-INF/context.xml")
+public class JdbcProductDaoITest {
+    @Autowired
+    private JdbcProductDao jdbcProductDao;
+
+    @Test
+    @DisplayName("when FindAll then Return Not Null Data")
+    public void whenFindAll_thenReturnNotNullData() {
+        List<Product> products = jdbcProductDao.findAll();
+        assertFalse(products.isEmpty());
+        for (Product product : products) {
+            assertNotNull(product.getId());
+            assertNotNull(product.getName());
+            assertNotNull(product.getPrice());
+            assertNotNull(product.getCreationDate());
+        }
+    }
+
+    @Test
+    @DisplayName("when FindAll then Return  Is Not Null")
+    void whenFindAll_thenSize_isNotNull() {
+        List<Product> products = jdbcProductDao.findAll();
+        assertNotNull(products.size());
+    }
+
+    @Test
+    @DisplayName("when Add then Size Of List Increase By One")
+    void whenAdd_thenSizeOfListIncreaseByOne() {
+        Product newProduct = Product.builder().
+                name("snowboard").
+                price(3000.00).
+                creationDate(LocalDateTime.now())
+                .build();
+        int sizeBeforeAdd = jdbcProductDao.findAll().size();
+        jdbcProductDao.add(newProduct);
+
+        int sizeAfterAdd = jdbcProductDao.findAll().size();
+        assertEquals(sizeBeforeAdd + 1, sizeAfterAdd);
+    }
+
+    @Test
+    @DisplayName("when Search New Product By Name then List With Searched Product is Not Empty")
+    void whenSearchNewProductByName_thenListWithSearchedProduct_isNotEmpty() {
+        Product newProduct = Product.builder().
+                name("new_snowboard").
+                price(3000.00).
+                creationDate(LocalDateTime.now())
+                .build();
+        jdbcProductDao.add(newProduct);
+
+        List<Product> listWithSearchedProduct = jdbcProductDao.search("snowboard");
+        assertNotNull(listWithSearchedProduct);
+    }
+
+    @Test
+    @DisplayName("when Update then Size Of List does Not Change")
+    void whenUpdate_thenSizeOfList_doesNotChange() {
+        Product newProduct = Product.builder().
+                name("snowboard").
+                price(3000.00).
+                creationDate(LocalDateTime.now())
+                .build();
+        jdbcProductDao.add(newProduct);
+
+        int sizeBeforeUpdate = jdbcProductDao.findAll().size();
+        jdbcProductDao.update(newProduct);
+        int sizeAfterUpdate = jdbcProductDao.findAll().size();
+
+        assertEquals(sizeBeforeUpdate, sizeAfterUpdate);
+    }
+}
