@@ -42,7 +42,7 @@ public class JdbcUserDaoITest {
         assertNotNull(user.getId());
         assertNotNull(user.getSalt());
         assertNotNull(user.getPassword());
-        assertNotNull(user.getLogin());
+        assertNotNull(user.getUser());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class JdbcUserDaoITest {
             assertNull(user.getId());
             assertNull(user.getSalt());
             assertNull(user.getPassword());
-            assertNull(user.getLogin());
+            assertNull(user.getUser());
         });
     }
 }

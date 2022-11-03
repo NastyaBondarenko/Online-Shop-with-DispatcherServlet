@@ -1,16 +1,16 @@
 package com.bondarenko.onlineshop.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 
 @Data
 @Builder
+@Setter
+@Getter
 @AllArgsConstructor
 public class User {
     private int id;
-    private String login;
+    private String user;
     private String password;
     private String salt;
 }

@@ -29,7 +29,7 @@ public class UserRowMapperTest {
 
         assertNotNull(actualUser);
         assertEquals(1, actualUser.getId());
-        assertEquals("user", actualUser.getLogin());
+        assertEquals("user", actualUser.getUser());
         assertEquals("pass", actualUser.getPassword());
         assertEquals("4A17982d", actualUser.getSalt());
     }

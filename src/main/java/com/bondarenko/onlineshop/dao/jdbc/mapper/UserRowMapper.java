@@ -14,7 +14,7 @@ public class UserRowMapper {
 
         return User.builder().
                 id(id)
-                .login(login)
+                .user(login)
                 .password(password)
                 .salt(salt)
                 .build();
