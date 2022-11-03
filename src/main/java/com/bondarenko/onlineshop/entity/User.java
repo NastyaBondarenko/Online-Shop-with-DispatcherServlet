@@ -2,8 +2,6 @@ package com.bondarenko.onlineshop.entity;
 
 import lombok.*;
 
-
-
 @Builder
 @Setter
 @Getter

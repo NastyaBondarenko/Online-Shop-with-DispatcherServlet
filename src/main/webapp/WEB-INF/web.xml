@@ -10,6 +10,16 @@
         <param-value></param-value>
     </context-param>
 
+    <filter>
+        <filter-name>securityFilter</filter-name>
+        <filter-class>com.bondarenko.onlineshop.web.security.SecurityFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>securityFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -24,159 +34,4 @@
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-    <!--    <filter>-->
-    <!--        <filter-name>SecurityFilter</filter-name>-->
-    <!--        <filter-class>com.bondarenko.onlineshop.web.security.SecurityFilter</filter-class>-->
-    <!--    </filter>-->
-
-    <!--    <filter-mapping>-->
-    <!--        <filter-name>SecurityFilter</filter-name>-->
-    <!--        <url-pattern>/*</url-pattern>-->
-    <!--    </filter-mapping>-->
-
 </web-app>
-        <!--<web-app>-->
-        <!--    <listener>-->
-        <!--        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
-        <!--    </listener>-->
-
-        <!--    <context-param>-->
-        <!--        <param-name>contextConfigLocation</param-name>-->
-        <!--        <param-value>/WEB-INF/dispatcherServlet-servlet.xml</param-value>-->
-        <!--    </context-param>-->
-
-        <!--    <servlet>-->
-        <!--        <servlet-name>dispatcherServlet</servlet-name>-->
-        <!--        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
-        <!--        &lt;!&ndash;        <load-on-startup>1</load-on-startup>&ndash;&gt;-->
-        <!--        <init-param>-->
-        <!--            <param-name>contextConfigLocation</param-name>-->
-        <!--            <param-value>/WEB-INF/dispatcherServlet-servlet.xml</param-value>-->
-        <!--        </init-param>-->
-        <!--        <load-on-startup>1</load-on-startup>-->
-        <!--    </servlet>-->
-
-        <!--    <servlet-mapping>-->
-        <!--        <servlet-name>dispatcherServlet</servlet-name>-->
-        <!--        <url-pattern>/</url-pattern>-->
-        <!--    </servlet-mapping>-->
-
-        <!--    <filter>-->
-        <!--        <filter-name>SecurityFilter</filter-name>-->
-        <!--        <filter-class>com.bondarenko.onlineshop.web.security.SecurityFilter</filter-class>-->
-        <!--    </filter>-->
-
-        <!--    <filter-mapping>-->
-        <!--        <filter-name>SecurityFilter</filter-name>-->
-        <!--        <url-pattern>/*</url-pattern>-->
-        <!--    </filter-mapping>-->
-
-        <!--    <context-param>-->
-        <!--        <param-name>contextConfigLocation</param-name>-->
-        <!--        <param-value>/WEB-INF/dispatcherServlet-servlet.xml</param-value>-->
-        <!--    </context-param>-->
-
-
-        <!--    <filter>-->
-        <!--        <filter-name>springSecurityFilterChain</filter-name>-->
-        <!--        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
-        <!--    </filter>-->
-        <!--    <filter-mapping>-->
-        <!--        <filter-name>springSecurityFilterChain</filter-name>-->
-        <!--        <url-pattern>/admin</url-pattern>-->
-        <!--    </filter-mapping>-->
-
-
-        <!--    -->
-        <!--    <servlet>-->
-        <!--        <servlet-name>dispatcherServlet</servlet-name>-->
-        <!--        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
-        <!--        <load-on-startup>1</load-on-startup>-->
-        <!--    </servlet>-->
-
-        <!--    <servlet-mapping>-->
-        <!--        <servlet-name>dispatcherServlet</servlet-name>-->
-        <!--        <url-pattern>/</url-pattern>-->
-        <!--    </servlet-mapping>-->
-
-
-        <!--&lt;!&ndash;    <context-param>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <param-name>contextConfigLocation</param-name>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <param-value>/WEB-INF/applicationContext.xml</param-value>&ndash;&gt;-->
-        <!--&lt;!&ndash;    </context-param>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <listener>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>&ndash;&gt;-->
-        <!--&lt;!&ndash;    </listener>&ndash;&gt;-->
-        <!--</web-app>-->
-        <!--        &lt;!&ndash;    <servlet>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>AddProductServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-class>com.bondarenko.onlineshop.web.servlets.AddProductServlet</servlet-class>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet-mapping>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>AddProductServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <url-pattern>/products/add</url-pattern>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet-mapping>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>DeleteProductServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-class>com.bondarenko.onlineshop.web.servlets.DeleteProductServlet</servlet-class>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet-mapping>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>DeleteProductServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <url-pattern>/products/delete</url-pattern>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet-mapping>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>UpdateProductServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-class>com.bondarenko.onlineshop.web.servlets.UpdateProductServlet</servlet-class>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet-mapping>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>UpdateProductServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <url-pattern>/products/update</url-pattern>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet-mapping>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>SearchProductServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-class>com.bondarenko.onlineshop.web.servlets.SearchProductServlet</servlet-class>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet-mapping>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>SearchProductServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <url-pattern>/products/search</url-pattern>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet-mapping>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>AllProductsServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-class>com.bondarenko.onlineshop.web.servlets.AllProductsServlet</servlet-class>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet-mapping>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>AllProductsServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <url-pattern>/products</url-pattern>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet-mapping>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>AllProductsServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-class>com.bondarenko.onlineshop.web.servlets.AllProductsServlet</servlet-class>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet-mapping>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>AllProductsServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <url-pattern>/*</url-pattern>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet-mapping>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    <servlet>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>LoginServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-class>com.bondarenko.onlineshop.web.servlets.LoginServlet</servlet-class>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet>&ndash;&gt;-->
-
-        <!--        &lt;!&ndash;    <servlet-mapping>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <servlet-name>LoginServlet</servlet-name>&ndash;&gt;-->
-        <!--        &lt;!&ndash;        <url-pattern>/login</url-pattern>&ndash;&gt;-->
-        <!--        &lt;!&ndash;    </servlet-mapping>&ndash;&gt;-->
-
-
-

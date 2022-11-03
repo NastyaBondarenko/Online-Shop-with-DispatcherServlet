@@ -2,7 +2,6 @@ package com.bondarenko.onlineshop.security;
 
 import com.bondarenko.onlineshop.entity.User;
 import com.bondarenko.onlineshop.service.UserService;
-import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;

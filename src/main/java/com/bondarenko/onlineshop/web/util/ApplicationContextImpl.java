@@ -1,4 +1,4 @@
-package com.bondarenko.onlineshop.web.util.context.context;
+package com.bondarenko.onlineshop.web.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
