@@ -7,7 +7,7 @@
         </layout>
     </appender>
 
-    <root level="error">
-        <appender-ref ref="CONSOLE"/>
+    <root level="debug">
+        <appender-ref ref="DEBUG"/>
     </root>
 </configuration>

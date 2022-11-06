@@ -1,7 +1,6 @@
 package com.bondarenko.onlineshop.web.security;
 
 import com.bondarenko.onlineshop.service.UserService;
-import com.bondarenko.onlineshop.web.util.ApplicationContextImpl;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import java.util.List;
 public class SecurityFilter implements Filter {
     @Autowired
     private UserService userService;
-
     private final List<String> allowedPath = List.of("/login");
 
     @Override
@@ -37,15 +35,12 @@ public class SecurityFilter implements Filter {
             }
         }
         log.info("Check if user is authorized");
-        UserService userService = ApplicationContextImpl.getApplicationContext().getBean(UserService.class);
-        this.setUserService(userService);
         if (userService.isAuth(httpServletRequest.getCookies())) {
             chain.doFilter(request, response);
         } else {
             httpServletResponse.sendRedirect("/login");
         }
     }
-
 
     @Override
     public void destroy() {

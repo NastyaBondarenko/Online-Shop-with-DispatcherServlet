@@ -2,7 +2,6 @@ package com.bondarenko.onlineshop.service;
 
 import com.bondarenko.onlineshop.dao.UserDao;
 import com.bondarenko.onlineshop.entity.User;
-import lombok.Getter;
 import lombok.Setter;
 
 import javax.servlet.http.Cookie;
