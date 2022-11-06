@@ -8,6 +8,9 @@
     </appender>
 
     <root level="debug">
-        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>
+
+
+
