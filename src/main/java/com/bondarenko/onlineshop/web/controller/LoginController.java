@@ -1,4 +1,4 @@
-package com.bondarenko.onlineshop.controller;
+package com.bondarenko.onlineshop.web.controller;
 
 import com.bondarenko.onlineshop.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;

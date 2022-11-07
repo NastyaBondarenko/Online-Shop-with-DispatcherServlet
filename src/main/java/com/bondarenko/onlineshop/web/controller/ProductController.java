@@ -1,4 +1,4 @@
-package com.bondarenko.onlineshop.controller;
+package com.bondarenko.onlineshop.web.controller;
 
 import com.bondarenko.onlineshop.entity.Product;
 import com.bondarenko.onlineshop.service.ProductService;
