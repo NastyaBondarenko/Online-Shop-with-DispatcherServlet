@@ -17,8 +17,6 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <bean id="applicationContextProvider" class="com.bondarenko.onlineshop.web.util.ApplicationContextImpl"/>
-
     <bean id="pgSimpleDataSource" class="org.postgresql.ds.PGSimpleDataSource">
         <property name="user" value="${db.user}"/>
         <property name="password" value="${db.pass}"/>
