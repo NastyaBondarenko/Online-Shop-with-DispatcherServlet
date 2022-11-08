@@ -10,13 +10,8 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <context:component-scan base-package=
-                                    "com.bondarenko.onlineshop.dao,
-    com.bondarenko.onlineshop.service,
+    <context:component-scan base-package="com.bondarenko.onlineshop.dao, com.bondarenko.onlineshop.service,
     com.bondarenko.onlineshop.security"/>
-
-    <bean id="applicationContextProvider"
-          class="org.springframework.web.context.support.AnnotationConfigWebApplicationContext"/>
 
     <bean id="pgSimpleDataSource" class="org.postgresql.ds.PGSimpleDataSource">
         <property name="user" value="${db.user}"/>
@@ -24,7 +19,7 @@
         <property name="databaseName" value="${db.databaseName}"/>
     </bean>
 
-    <bean id="SecurityFilter" class="com.bondarenko.onlineshop.web.security.SecurityFilter">
+    <bean id="securityFilter" class="com.bondarenko.onlineshop.web.security.SecurityFilter">
         <property name="userService" ref="userService"/>
     </bean>
 
