@@ -2,16 +2,23 @@ package com.bondarenko.onlineshop.service;
 
 import com.bondarenko.onlineshop.dao.UserDao;
 import com.bondarenko.onlineshop.entity.User;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Setter
+@Service
 public class UserService {
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    @Autowired
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     private final List<String> userTokens = new ArrayList<>();
 
     public User findUser(String login) {

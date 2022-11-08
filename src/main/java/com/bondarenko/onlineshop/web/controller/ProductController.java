@@ -15,8 +15,13 @@ import java.util.List;
 
 @Controller
 public class ProductController {
+
+    private final ProductService productService;
+
     @Autowired
-    private ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping({"/products", "/*"})
     protected String getAll(Model model) {
@@ -31,12 +36,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/add")
-    protected String add(@RequestParam String name, @RequestParam double price) {
-        Product product = Product.builder().
-                name(name)
-                .price(price)
-                .build();
-
+    protected String add(@ModelAttribute Product product) {
         productService.add(product);
         return "redirect:/products";
     }
@@ -72,6 +72,4 @@ public class ProductController {
         return "redirect:/products";
     }
 }
-
-
 

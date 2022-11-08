@@ -2,14 +2,21 @@ package com.bondarenko.onlineshop.service;
 
 import com.bondarenko.onlineshop.dao.ProductDao;
 import com.bondarenko.onlineshop.entity.Product;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Setter
+
+@Service
 public class ProductService {
     private ProductDao productDao;
+
+    @Autowired
+    public ProductService(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     public void add(Product product) {
         LocalDateTime now = LocalDateTime.now();

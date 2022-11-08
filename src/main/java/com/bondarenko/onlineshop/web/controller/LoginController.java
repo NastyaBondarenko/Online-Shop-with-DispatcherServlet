@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class LoginController {
+
+    private final SecurityService securityService;
+
     @Autowired
-    private SecurityService securityService;
+    public LoginController(SecurityService securityService) {
+        this.securityService = securityService;
+    }
 
     @GetMapping("/login")
     protected String getLoginPage() {

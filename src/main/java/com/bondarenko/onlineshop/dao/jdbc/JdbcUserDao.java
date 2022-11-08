@@ -3,8 +3,8 @@ package com.bondarenko.onlineshop.dao.jdbc;
 import com.bondarenko.onlineshop.dao.UserDao;
 import com.bondarenko.onlineshop.dao.jdbc.mapper.UserRowMapper;
 import com.bondarenko.onlineshop.entity.User;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -12,11 +12,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Setter
-@Getter
+@Repository
 public class JdbcUserDao implements UserDao {
-    private DataSource dataSource;
-    private UserRowMapper userRowMapper;
+    private final DataSource dataSource;
+    private final UserRowMapper userRowMapper;
+
+    @Autowired
+    public JdbcUserDao(DataSource dataSource, UserRowMapper userRowMapper) {
+        this.dataSource = dataSource;
+        this.userRowMapper = userRowMapper;
+    }
+
     private static final String FIND_USER_SQL = "SELECT id, login, password, salt FROM users WHERE login=?";
 
     @Override

@@ -2,17 +2,21 @@ package com.bondarenko.onlineshop.security;
 
 import com.bondarenko.onlineshop.entity.User;
 import com.bondarenko.onlineshop.service.UserService;
-import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.UUID;
 
-@Setter
+@Service
 public class SecurityService {
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public SecurityService(UserService userService) {
+        this.userService = userService;
+    }
 
     public String encryptPasswordWithSalt(String password, String login) {
         String salt = getSalt(login);
