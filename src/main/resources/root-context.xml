@@ -19,7 +19,7 @@
         <property name="databaseName" value="${db.databaseName}"/>
     </bean>
 
-    <bean id="securityFilter" class="com.bondarenko.onlineshop.web.security.SecurityFilter">
+    <bean id="SecurityFilter" class="com.bondarenko.onlineshop.web.security.SecurityFilter">
         <property name="securityService" ref="securityService"/>
     </bean>
 
