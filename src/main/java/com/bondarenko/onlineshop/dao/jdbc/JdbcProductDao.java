@@ -19,8 +19,8 @@ import java.util.List;
 
 @Repository
 public class JdbcProductDao implements ProductDao {
-    private DataSource dataSource;
-    private ProductRowMapper productRowMapper;
+    private final DataSource dataSource;
+    private final ProductRowMapper productRowMapper;
 
     @Autowired
     public JdbcProductDao(DataSource dataSource, ProductRowMapper productRowMapper) {
