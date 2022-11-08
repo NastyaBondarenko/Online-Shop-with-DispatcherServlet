@@ -27,7 +27,7 @@ public class LoginController {
         String token = securityService.login(login, password);
         if (token != null) {
             response.addCookie(new Cookie("user-token", token));
-            return "redirect:/*";
+            return "redirect:/";
         } else {
             return "login";
         }

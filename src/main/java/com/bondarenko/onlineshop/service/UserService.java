@@ -12,11 +12,8 @@ public class UserService {
         this.userDao = userDao;
     }
 
-
     public User findUser(String login) {
 
         return userDao.findUser(login);
     }
-
-
 }
