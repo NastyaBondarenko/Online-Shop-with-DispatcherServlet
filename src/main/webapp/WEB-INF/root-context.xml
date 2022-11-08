@@ -24,9 +24,6 @@
         <property name="databaseName" value="${db.databaseName}"/>
     </bean>
 
-    <bean id="productRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper"/>
-    <bean id="userRowMapper" class="com.bondarenko.onlineshop.dao.jdbc.mapper.UserRowMapper"/>
-
     <bean id="SecurityFilter" class="com.bondarenko.onlineshop.web.security.SecurityFilter">
         <property name="userService" ref="userService"/>
     </bean>

@@ -1,11 +1,13 @@
 package com.bondarenko.onlineshop.dao.jdbc.mapper;
 
 import com.bondarenko.onlineshop.entity.Product;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+@Component
 public class ProductRowMapper {
 
     public Product mapRow(ResultSet resultSet) throws SQLException {
