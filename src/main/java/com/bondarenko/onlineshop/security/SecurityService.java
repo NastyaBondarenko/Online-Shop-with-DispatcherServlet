@@ -3,7 +3,6 @@ package com.bondarenko.onlineshop.security;
 import com.bondarenko.onlineshop.entity.User;
 import com.bondarenko.onlineshop.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -13,7 +12,6 @@ import java.util.UUID;
 public class SecurityService {
     private final UserService userService;
 
-    @Autowired
     public SecurityService(UserService userService) {
         this.userService = userService;
     }

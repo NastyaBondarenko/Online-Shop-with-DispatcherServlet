@@ -3,16 +3,10 @@ package com.bondarenko.onlineshop.dao.jdbc;
 import com.bondarenko.onlineshop.dao.ProductDao;
 import com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper;
 import com.bondarenko.onlineshop.entity.Product;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +16,6 @@ public class JdbcProductDao implements ProductDao {
     private final DataSource dataSource;
     private final ProductRowMapper productRowMapper;
 
-    @Autowired
     public JdbcProductDao(DataSource dataSource, ProductRowMapper productRowMapper) {
         this.dataSource = dataSource;
         this.productRowMapper = productRowMapper;

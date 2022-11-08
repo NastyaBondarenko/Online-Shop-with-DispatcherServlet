@@ -1,7 +1,6 @@
 package com.bondarenko.onlineshop.web.controller;
 
 import com.bondarenko.onlineshop.security.SecurityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,10 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class LoginController {
-
     private final SecurityService securityService;
 
-    @Autowired
     public LoginController(SecurityService securityService) {
         this.securityService = securityService;
     }

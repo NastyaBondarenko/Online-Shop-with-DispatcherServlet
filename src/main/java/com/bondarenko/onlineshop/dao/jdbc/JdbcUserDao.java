@@ -3,7 +3,6 @@ package com.bondarenko.onlineshop.dao.jdbc;
 import com.bondarenko.onlineshop.dao.UserDao;
 import com.bondarenko.onlineshop.dao.jdbc.mapper.UserRowMapper;
 import com.bondarenko.onlineshop.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -17,7 +16,6 @@ public class JdbcUserDao implements UserDao {
     private final DataSource dataSource;
     private final UserRowMapper userRowMapper;
 
-    @Autowired
     public JdbcUserDao(DataSource dataSource, UserRowMapper userRowMapper) {
         this.dataSource = dataSource;
         this.userRowMapper = userRowMapper;
