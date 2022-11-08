@@ -20,7 +20,7 @@
     </bean>
 
     <bean id="securityFilter" class="com.bondarenko.onlineshop.web.security.SecurityFilter">
-        <property name="userService" ref="userService"/>
+        <property name="securityService" ref="securityService"/>
     </bean>
 
 </beans>

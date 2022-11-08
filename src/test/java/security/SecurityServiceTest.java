@@ -88,7 +88,7 @@ public class SecurityServiceTest {
     @DisplayName("test Is Auth False when Cookies Is Null")
     public void testIsAuthFalse_whenCookiesIsNull() {
         Cookie[] cookies = null;
-        assertFalse(userService.isAuth(cookies));
+        assertFalse(securityService.isAuth(cookies));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class SecurityServiceTest {
     void testIsAuthFalseWhenUserNotLoggedIn() {
         Cookie[] cookies = new Cookie[0];
 
-        assertFalse(userService.isAuth(cookies));
+        assertFalse(securityService.isAuth(cookies));
     }
 
     @Test
