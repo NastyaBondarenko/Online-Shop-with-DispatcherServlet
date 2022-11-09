@@ -25,11 +25,11 @@ public class LoginController {
 
     @PostMapping("/login")
     protected String login(@RequestParam String login, @RequestParam String password, HttpServletResponse response) {
-       TokenAndSessionLifeTime tokenAndSessionLifeTime = securityService.login(login, password);
-        if (tokenAndSessionLifeTime!=null) {
-            Cookie cookie=new Cookie("user-token", tokenAndSessionLifeTime.getToken());
-            int expiry=tokenAndSessionLifeTime.getSessionLifeTime();
-            cookie.setMaxAge(100);//replace
+        TokenAndSessionLifeTime tokenAndSessionLifeTime = securityService.login(login, password);
+        if (tokenAndSessionLifeTime != null) {
+            Cookie cookie = new Cookie("user-token", tokenAndSessionLifeTime.getToken());
+            int sessionLifeTime = tokenAndSessionLifeTime.getSessionLifeTime();
+            cookie.setMaxAge(sessionLifeTime);
             response.addCookie(cookie);
             return "redirect:/";
         } else {

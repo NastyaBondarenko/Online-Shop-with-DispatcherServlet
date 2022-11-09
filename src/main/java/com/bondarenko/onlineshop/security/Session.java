@@ -11,7 +11,4 @@ import java.time.LocalDateTime;
 public class Session {
  private String token;
  private LocalDateTime expireDate;
- 
-    public Session(String token, int sessionTimeToLive) {
-    }
 }
