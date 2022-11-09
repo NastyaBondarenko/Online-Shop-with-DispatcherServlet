@@ -1,8 +1,6 @@
-package security;
+package com.bondarenko.onlineshop.security;
 
-import com.bondarenko.onlineshop.entity.TokenAndSessionLifeTime;
-import com.bondarenko.onlineshop.security.SecurityService;
-import com.bondarenko.onlineshop.service.UserService;
+import com.bondarenko.onlineshop.entity.SessionData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +15,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringJUnitWebConfig
 @ContextConfiguration(locations = "classpath:WEB-INF/context.xml")
 public class SecurityServiceTest {
-
-    @Autowired
-    private UserService userService;
     @Autowired
     private SecurityService securityService;
+    private PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
 
     @Test
     @DisplayName("test Encrypt Password With Salt")
     public void testEncryptPasswordWithSalt() {
 
-        String actualEncryptPassword = securityService.encryptPasswordWithSalt("pass", "user");
+        String actualEncryptPassword = passwordEncryptor.encryptPasswordWithSalt("pass", "4A17982C");
         String expectedEncryptPassword = "a3634ac4a752cfcee2c3e8ff2351347d";
 
         assertEquals(expectedEncryptPassword, actualEncryptPassword);
@@ -46,7 +42,7 @@ public class SecurityServiceTest {
     @Test
     @DisplayName("test Generate Hash")
     public void testGenerateHash() {
-        String actualHash = securityService.hash("user");
+        String actualHash = passwordEncryptor.hash("user");
         String expectedHash = "ee11cbb19052e40b07aac0ca060c23ee";
 
         assertNotNull(actualHash);
@@ -56,16 +52,16 @@ public class SecurityServiceTest {
     @Test
     @DisplayName("test Login when User And Password are Not correct")
     public void testLogin_whenUserAndPassword_areNotCorrect() {
-        TokenAndSessionLifeTime tokenAndSessionLifeTime = securityService.login("user", "NotExistingPassword");
-        assertNull(tokenAndSessionLifeTime);
+        SessionData sessionData = securityService.login("user", "NotExistingPassword");
+        assertNull(sessionData);
     }
 
     @Test
     @DisplayName("test Login when User And Password are correct")
     public void testLogin_whenUserAndPassword_areCorrect() {
         String expectedToken = "0";
-        TokenAndSessionLifeTime tokenAndSessionLifeTime = securityService.login("user", "pass");
-        String actualToken = tokenAndSessionLifeTime.getToken();
+        SessionData sessionData = securityService.login("user", "pass");
+        String actualToken = sessionData.getToken();
         assertNotNull(actualToken);
         assertNotEquals(expectedToken, actualToken);
     }
@@ -100,8 +96,8 @@ public class SecurityServiceTest {
     @Test
     @DisplayName("test Generate Random Salt")
     public void testGenerateRandomSalt() {
-        String actualSalt = securityService.generateSalt();
-        String expectedSalt = securityService.generateSalt();
+        String actualSalt = passwordEncryptor.generateSalt();
+        String expectedSalt = passwordEncryptor.generateSalt();
 
         assertNotNull(actualSalt);
         assertNotEquals(expectedSalt, actualSalt);

@@ -1,6 +1,5 @@
-package dao.jdbc;
+package com.bondarenko.onlineshop.dao.jdbc;
 
-import com.bondarenko.onlineshop.dao.jdbc.JdbcProductDao;
 import com.bondarenko.onlineshop.entity.Product;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

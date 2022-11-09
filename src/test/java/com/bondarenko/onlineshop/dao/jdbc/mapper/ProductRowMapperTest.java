@@ -1,6 +1,5 @@
-package dao.jdbc.mapper;
+package com.bondarenko.onlineshop.dao.jdbc.mapper;
 
-import com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper;
 import com.bondarenko.onlineshop.entity.Product;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

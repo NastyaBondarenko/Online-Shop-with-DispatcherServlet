@@ -1,4 +1,4 @@
-package dao.jdbc;
+package com.bondarenko.onlineshop.dao.jdbc;
 
 import com.bondarenko.onlineshop.dao.jdbc.JdbcUserDao;
 import com.bondarenko.onlineshop.entity.User;
