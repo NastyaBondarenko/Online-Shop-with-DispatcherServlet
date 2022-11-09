@@ -14,17 +14,17 @@ import java.util.*;
 
 @Service
 public class SecurityService {
-    private final List<Session> sessionList = new ArrayList<>();
+    private final List<Session> sessionList = Collections.synchronizedList(new ArrayList<>());
     private final UserService userService;
     private final int sessionLifeTime;
 
     @Autowired
-    public SecurityService(UserService userService,@Value("${session.sessionLifeTime}") String sessionLifeTime) {
+    public SecurityService(UserService userService, @Value("${session.sessionLifeTime}") String sessionLifeTime) {
         this.userService = userService;
         this.sessionLifeTime = Integer.parseInt(sessionLifeTime);
     }
 
-    public String encryptPasswordWithSalt(String password,  String login) {
+    public String encryptPasswordWithSalt(String password, String login) {
         String salt = getSalt(login);
         String passwordWithSalt = password + salt;
 
@@ -71,24 +71,26 @@ public class SecurityService {
     //__
     public Cookie generateCookie() {
         String userToken = UUID.randomUUID().toString();
-//        userTokens.add(userToken);
         return new Cookie("user-token", userToken);
     }
 
     public boolean isAuth(Cookie[] cookies) {
+        String userToken;
+        LocalDateTime localDateTime = LocalDateTime.now();
         if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if (cookie.getName().equals("user-token")) {
-//                    if (userTokens.contains(cookie.getValue())) {
-            return true;
-//                    }
-//                }
-//            }
-//        }
-
-
+            for (Cookie cookie : cookies) {
+                userToken = cookie.getValue();
+                for (Session session : sessionList) {
+                    if (session.getToken().equals(userToken)) {
+                        if (session.getExpireDate().isAfter(localDateTime)) {
+                            return true;
+                        }
+                        sessionList.remove(session);
+                        break;
+                    }
+                }
+            }
         }
-
         return false;
     }
 }
