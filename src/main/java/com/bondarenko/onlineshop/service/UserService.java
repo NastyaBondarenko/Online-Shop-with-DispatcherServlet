@@ -13,7 +13,6 @@ public class UserService {
     }
 
     public User findUser(String login) {
-
         return userDao.findUser(login);
     }
 }

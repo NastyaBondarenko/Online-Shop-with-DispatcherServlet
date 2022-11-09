@@ -9,9 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenAndSessionLifeTime {
+public class SessionData {
     private String token;
     private int sessionLifeTime;
-
-
 }
