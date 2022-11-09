@@ -1,5 +1,6 @@
 package com.bondarenko.onlineshop.web.controller;
 
+import com.bondarenko.onlineshop.entity.TokenAndSessionLifeTime;
 import com.bondarenko.onlineshop.security.SecurityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,12 @@ public class LoginController {
 
     @PostMapping("/login")
     protected String login(@RequestParam String login, @RequestParam String password, HttpServletResponse response) {
-        String token = securityService.login(login, password);
-        if (token != null) {
-            response.addCookie(new Cookie("user-token", token));
+       TokenAndSessionLifeTime tokenAndSessionLifeTime = securityService.login(login, password);
+        if (tokenAndSessionLifeTime!=null) {
+            Cookie cookie=new Cookie("user-token", tokenAndSessionLifeTime.getToken());
+            int expiry=tokenAndSessionLifeTime.getSessionLifeTime();
+            cookie.setMaxAge(100);//replace
+            response.addCookie(cookie);
             return "redirect:/";
         } else {
             return "login";

@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Slf4j
 public class SecurityFilter implements Filter {
-    private UserService userService;
+
     private SecurityService securityService;
     private final List<String> allowedPath = List.of("/login");
 
