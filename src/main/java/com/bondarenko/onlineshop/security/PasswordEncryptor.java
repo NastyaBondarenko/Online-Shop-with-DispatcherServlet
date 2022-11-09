@@ -3,7 +3,6 @@ package com.bondarenko.onlineshop.security;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import javax.servlet.http.Cookie;
 import java.util.UUID;
 
 public class PasswordEncryptor {
@@ -24,8 +23,7 @@ public class PasswordEncryptor {
     }
 
     @VisibleForTesting
-    Cookie generateCookie() {
-        String userToken = UUID.randomUUID().toString();
-        return new Cookie("user-token", userToken);
+    String generateToken() {
+        return UUID.randomUUID().toString();
     }
 }

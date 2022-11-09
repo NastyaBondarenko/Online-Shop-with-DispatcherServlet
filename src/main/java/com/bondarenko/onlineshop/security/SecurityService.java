@@ -18,7 +18,7 @@ import java.util.Objects;
 @Service
 public class SecurityService {
     private final List<Session> sessionList = Collections.synchronizedList(new ArrayList<>());
-    private final   PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
+    private final PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
     private final UserService userService;
     private final int sessionLifeTime;
 
@@ -30,13 +30,12 @@ public class SecurityService {
 
     public SessionData login(String login, String password) {
         if (isValidCredential(login, password)) {
-            String token = passwordEncryptor.generateCookie().getValue();
+            String token = passwordEncryptor.generateToken();
             LocalDateTime expireDataTime = LocalDateTime.now().plusSeconds(sessionLifeTime);
             Session session = new Session(token, expireDataTime);
             sessionList.add(session);
-            SessionData sessionData = new SessionData(token, sessionLifeTime);
 
-            return sessionData;
+            return new SessionData(token, sessionLifeTime);
         }
         return null;
     }
