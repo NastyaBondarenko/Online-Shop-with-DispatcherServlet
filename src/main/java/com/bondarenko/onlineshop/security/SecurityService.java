@@ -38,18 +38,15 @@ public class SecurityService {
 
     public boolean isAuth(Cookie[] cookies) {
         String userToken;
-        LocalDateTime localDateTime = LocalDateTime.now();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 userToken = cookie.getValue();
                 for (Session session : sessionList) {
                     if (session.getToken().equals(userToken)) {
-                        if (session.getExpireDate().isAfter(localDateTime)) {
-                            return true;
-                        }
-                        sessionList.remove(session);
-                        break;
+                        return true;
                     }
+                    sessionList.remove(session);
+                    break;
                 }
             }
         }
