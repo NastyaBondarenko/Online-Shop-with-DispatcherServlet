@@ -10,17 +10,14 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <context:component-scan base-package="com.bondarenko.onlineshop.dao, com.bondarenko.onlineshop.service,
-    com.bondarenko.onlineshop.security"/>
+    <context:component-scan base-package="com.bondarenko">
+        <context:exclude-filter type="regex" expression="com.bondarenko.onlineshop.web"/>
+    </context:component-scan>
 
     <bean id="pgSimpleDataSource" class="org.postgresql.ds.PGSimpleDataSource">
         <property name="user" value="${db.user}"/>
         <property name="password" value="${db.pass}"/>
         <property name="databaseName" value="${db.databaseName}"/>
-    </bean>
-
-    <bean id="securityFilter" class="com.bondarenko.onlineshop.web.security.SecurityFilter">
-        <property name="securityService" ref="securityService"/>
     </bean>
 
 </beans>
