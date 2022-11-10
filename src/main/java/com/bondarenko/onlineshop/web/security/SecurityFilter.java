@@ -1,9 +1,9 @@
 package com.bondarenko.onlineshop.web.security;
 
 import com.bondarenko.onlineshop.security.SecurityService;
-import com.bondarenko.onlineshop.service.UserService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +34,10 @@ public class SecurityFilter implements Filter {
                 return;
             }
         }
+        WebApplicationContext applicationContext = (WebApplicationContext)
+                request.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        securityService = (SecurityService) applicationContext.getBean("securityService");
+
         log.info("Check if user is authorized");
         if (securityService.isAuth(httpServletRequest.getCookies())) {
             chain.doFilter(request, response);
