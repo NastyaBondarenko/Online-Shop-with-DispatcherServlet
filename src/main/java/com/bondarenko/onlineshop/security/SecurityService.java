@@ -43,7 +43,9 @@ public class SecurityService {
                 userToken = cookie.getValue();
                 for (Session session : sessionList) {
                     if (session.getToken().equals(userToken)) {
-                        return true;
+                        if (session.getExpireDate().isAfter(LocalDateTime.now())) {
+                            return true;
+                        }
                     }
                     sessionList.remove(session);
                     break;
