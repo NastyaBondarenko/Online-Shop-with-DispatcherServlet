@@ -17,21 +17,21 @@ public class SecurityService {
     private final CopyOnWriteArrayList<Session> sessionList = new CopyOnWriteArrayList<>();
     private final PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
     private final UserService userService;
-    private final int sessionLifeTime;
+    private final int sessionTime;
 
-    public SecurityService(UserService userService, @Value("${session.sessionLifeTime}") String sessionLifeTime) {
+    public SecurityService(UserService userService, @Value("${session.sessionLifeTime}") String sessionTime) {
         this.userService = userService;
-        this.sessionLifeTime = Integer.parseInt(sessionLifeTime);
+        this.sessionTime = Integer.parseInt(sessionTime);
     }
 
     public SessionData login(String login, String password) {
         if (isValidCredential(login, password)) {
             String token = passwordEncryptor.generateToken();
-            LocalDateTime expireDataTime = LocalDateTime.now().plusSeconds(sessionLifeTime);
+            LocalDateTime expireDataTime = LocalDateTime.now().plusSeconds(sessionTime);
             Session session = new Session(token, expireDataTime);
             sessionList.add(session);
 
-            return new SessionData(token, sessionLifeTime);
+            return new SessionData(token, sessionTime);
         }
         return null;
     }

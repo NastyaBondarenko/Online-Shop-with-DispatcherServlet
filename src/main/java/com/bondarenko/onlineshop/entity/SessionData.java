@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SessionData {
     private String token;
-    private int sessionLifeTime;
+    private int sessionTime;
 }

@@ -28,8 +28,8 @@ public class LoginController {
         SessionData sessionData = securityService.login(login, password);
         if (sessionData != null) {
             Cookie cookie = new Cookie("user-token", sessionData.getToken());
-            int sessionLifeTime = sessionData.getSessionLifeTime();
-            cookie.setMaxAge(sessionLifeTime);
+            int sessionTime = sessionData.getSessionTime();
+            cookie.setMaxAge(sessionTime);
             response.addCookie(cookie);
             return "redirect:/";
         } else {
