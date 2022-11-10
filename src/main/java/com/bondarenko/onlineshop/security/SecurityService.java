@@ -4,7 +4,6 @@ import com.bondarenko.onlineshop.entity.SessionData;
 import com.bondarenko.onlineshop.entity.User;
 import com.bondarenko.onlineshop.service.UserService;
 import com.google.common.annotations.VisibleForTesting;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,6 @@ public class SecurityService {
     private final UserService userService;
     private final int sessionLifeTime;
 
-    @Autowired
     public SecurityService(UserService userService, @Value("${session.sessionLifeTime}") String sessionLifeTime) {
         this.userService = userService;
         this.sessionLifeTime = Integer.parseInt(sessionLifeTime);
