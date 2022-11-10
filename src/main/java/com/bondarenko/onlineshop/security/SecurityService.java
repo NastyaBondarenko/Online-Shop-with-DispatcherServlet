@@ -10,14 +10,12 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class SecurityService {
-    private final List<Session> sessionList = Collections.synchronizedList(new ArrayList<>());
+    private final CopyOnWriteArrayList<Session> sessionList = new CopyOnWriteArrayList<>();
     private final PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
     private final UserService userService;
     private final int sessionLifeTime;
