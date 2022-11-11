@@ -3,6 +3,7 @@ package com.bondarenko.onlineshop.dao.jdbc;
 import com.bondarenko.onlineshop.dao.ProductDao;
 import com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper;
 import com.bondarenko.onlineshop.entity.Product;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -12,20 +13,17 @@ import java.util.List;
 
 
 @Repository
+@RequiredArgsConstructor
 public class JdbcProductDao implements ProductDao {
-    private final DataSource dataSource;
-    private final ProductRowMapper productRowMapper;
-
-    public JdbcProductDao(DataSource dataSource, ProductRowMapper productRowMapper) {
-        this.dataSource = dataSource;
-        this.productRowMapper = productRowMapper;
-    }
-
     private static final String FIND_ALL_SQL = "SELECT id, name, price, creation_date FROM products;";
     private static final String ADD_SQL = "INSERT INTO products (name, price, creation_date) VALUES (?,?,?);";
     private static final String DELETE_SQL = "DELETE FROM products WHERE id=?;";
     private static final String UPDATE_SQL = "UPDATE products SET name=?, price=?, creation_date=? WHERE id=?;";
     private static final String SEARCH_SQL = "SELECT id, name, price, creation_date FROM products WHERE  (name) LIKE ?;";
+
+    private final ProductRowMapper productRowMapper = new ProductRowMapper();
+    private final DataSource dataSource;
+
 
     @Override
     public List<Product> findAll() {
