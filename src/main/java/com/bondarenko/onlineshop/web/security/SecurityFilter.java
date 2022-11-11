@@ -27,6 +27,10 @@ public class SecurityFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
+        WebApplicationContext applicationContext = (WebApplicationContext)
+                request.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        securityService = (SecurityService) applicationContext.getBean("securityService");
+
         String requestURI = httpServletRequest.getRequestURI();
         for (String allowedPath : allowedPath) {
             if (requestURI.startsWith(allowedPath)) {
@@ -34,10 +38,6 @@ public class SecurityFilter implements Filter {
                 return;
             }
         }
-        WebApplicationContext applicationContext = (WebApplicationContext)
-                request.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-        securityService = (SecurityService) applicationContext.getBean("securityService");
-
         log.info("Check if user is authorized");
         if (securityService.isAuth(httpServletRequest.getCookies())) {
             chain.doFilter(request, response);
