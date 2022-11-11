@@ -20,7 +20,6 @@ public class ProductService {
         LocalDateTime now = LocalDateTime.now();
         product.setCreationDate(now);
         productDao.add(product);
-        System.out.println("Product added");
     }
 
     public void delete(int id) {

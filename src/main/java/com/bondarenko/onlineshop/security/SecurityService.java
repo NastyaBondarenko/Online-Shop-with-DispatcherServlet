@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
@@ -24,16 +25,16 @@ public class SecurityService {
         this.sessionTime = Integer.parseInt(sessionTime);
     }
 
-    public SessionData login(String login, String password) {
+    public Optional<SessionData> login(String login, String password) {
         if (isValidCredential(login, password)) {
             String token = passwordEncryptor.generateToken();
             LocalDateTime expireDataTime = LocalDateTime.now().plusSeconds(sessionTime);
             Session session = new Session(token, expireDataTime);
             sessionList.add(session);
 
-            return new SessionData(token, sessionTime);
+            return Optional.of(new SessionData(token, sessionTime));
         }
-        return null;
+        return Optional.empty();
     }
 
     public boolean isAuth(Cookie[] cookies) {

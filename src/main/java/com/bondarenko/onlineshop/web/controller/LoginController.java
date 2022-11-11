@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -25,15 +26,15 @@ public class LoginController {
 
     @PostMapping("/login")
     protected String login(@RequestParam String login, @RequestParam String password, HttpServletResponse response) {
-        SessionData sessionData = securityService.login(login, password);
-        if (sessionData != null) {
-            Cookie cookie = new Cookie("user-token", sessionData.getToken());
-            int sessionTime = sessionData.getSessionTime();
-            cookie.setMaxAge(sessionTime);
-            response.addCookie(cookie);
-            return "redirect:/";
-        } else {
+        Optional<SessionData> sessionDataOptional = securityService.login(login, password);
+        if (sessionDataOptional.isEmpty()) {
             return "login";
         }
+        SessionData sessionData = sessionDataOptional.get();
+        Cookie cookie = new Cookie("user-token", sessionData.getToken());
+        int sessionTime = sessionData.getSessionTime();
+        cookie.setMaxAge(sessionTime);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
