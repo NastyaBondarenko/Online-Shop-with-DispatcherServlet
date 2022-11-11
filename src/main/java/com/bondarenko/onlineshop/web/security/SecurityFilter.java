@@ -14,22 +14,20 @@ import java.util.List;
 @Setter
 @Slf4j
 public class SecurityFilter implements Filter {
-
-    private SecurityService securityService;
     private final List<String> allowedPath = List.of("/login");
+    private SecurityService securityService;
 
     @Override
     public void init(FilterConfig filterConfig) {
+        WebApplicationContext applicationContext = (WebApplicationContext)
+                filterConfig.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        securityService = (SecurityService) applicationContext.getBean("securityService");
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-
-        WebApplicationContext applicationContext = (WebApplicationContext)
-                request.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-        securityService = (SecurityService) applicationContext.getBean("securityService");
 
         String requestURI = httpServletRequest.getRequestURI();
         for (String allowedPath : allowedPath) {
@@ -44,10 +42,6 @@ public class SecurityFilter implements Filter {
         } else {
             httpServletResponse.sendRedirect("/login");
         }
-    }
-
-    @Override
-    public void destroy() {
     }
 }
 
