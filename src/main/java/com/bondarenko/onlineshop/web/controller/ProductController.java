@@ -62,8 +62,8 @@ public class ProductController {
     }
 
     @PostMapping("/products/update")
-    protected String update(@ModelAttribute Product product, @RequestParam String creation_date) {
-        LocalDateTime date = LocalDateTime.parse(creation_date);
+    protected String update(@ModelAttribute Product product, @RequestParam("creation_date") String creationDate) {
+        LocalDateTime date = LocalDateTime.parse(creationDate);
         Product newProduct = new Product(product.getId(), product.getName(), product.getPrice(), date);
         productService.update(newProduct);
         return "redirect:/products";
