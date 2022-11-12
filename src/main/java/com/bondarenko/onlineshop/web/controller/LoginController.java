@@ -2,6 +2,7 @@ package com.bondarenko.onlineshop.web.controller;
 
 import com.bondarenko.onlineshop.entity.SessionData;
 import com.bondarenko.onlineshop.security.SecurityService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,12 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
-    private final SecurityService securityService;
 
-    public LoginController(SecurityService securityService) {
-        this.securityService = securityService;
-    }
+    private final SecurityService securityService;
 
     @GetMapping("/login")
     protected String getLoginPage() {
