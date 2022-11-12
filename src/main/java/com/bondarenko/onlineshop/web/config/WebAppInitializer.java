@@ -1,6 +1,9 @@
 package com.bondarenko.onlineshop.web.config;
 
+import com.bondarenko.onlineshop.web.security.SecurityFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
 
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -20,8 +23,9 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         return new String[]{"/"};
     }
 
-//    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-//        registration.setInitParameter("enableLoggingRequestDetails", "true");
-//    }
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{new SecurityFilter()};
+    }
 }
 
