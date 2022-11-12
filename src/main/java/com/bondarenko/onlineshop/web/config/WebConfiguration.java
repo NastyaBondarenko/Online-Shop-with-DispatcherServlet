@@ -13,18 +13,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 @Configuration
 @ComponentScan(basePackages = {"com.bondarenko.onlineshop.web.controller"})
 @EnableWebMvc
-//@EnableAutoConfiguration
-public class WebConfig implements WebMvcConfigurer {
-
-//    @Bean
-//    public ViewResolver viewResolver() {
-//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-//        viewResolver.setViewClass(JstlView.class);
-//        viewResolver.setPrefix("/WEB-INF/pages/");
-//        viewResolver.setCache(true);
-//        viewResolver.setSuffix(".jsp");
-//        return viewResolver;
-//    }
+public class WebConfiguration implements WebMvcConfigurer {
 
     @Bean
     public FreeMarkerConfigurer freeMarkerConfigurer() {
