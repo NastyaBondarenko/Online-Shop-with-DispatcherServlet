@@ -48,4 +48,8 @@ public class ProductService {
     public List<Product> findAllFromCart() {
         return productDao.findAllFromCart();
     }
+
+    public void deleteFromCart(int id) {
+        productDao.deleteFromCart(id);
+    }
 }

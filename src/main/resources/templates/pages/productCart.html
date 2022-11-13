@@ -83,10 +83,19 @@
                 <td>${product.getPrice()}</td>
                 <td>${product.getCreationDate()}</td>
 
-                <td>
-                    <a href="/products/delete" ><button type="button" class="btn btn-danger">DELETE</button></a>
-                </td>
-
+<!--                <td>-->
+<!--                    <a href="/products/cart/delete" ><button type="button" class="btn btn-danger">DELETE</button></a>-->
+<!--                </td>-->
+                <form action="/products/cart/delete/{id}" method="post" accept-charset="utf-8" class="custom-add2cart">
+                    <!--                        <input type="hidden" name="target" value="cart" />-->
+                    <input type="hidden" name="action" value="deleteFromCart" />
+                    <input type="hidden" name="id" value="${product.getId()}" />
+                    <div class="add-button-wrapper widget-fingerprint-product-add-button">
+                        <button  type="submit" class="btn regular-button regular-main-button add2cart submit">
+                            <span>Delete from cart</span>
+                        </button>
+                    </div>
+                </form>
 
             </tr>
             </#list>

@@ -20,4 +20,6 @@ public interface ProductDao {
     List<Product> findAllFromCart();
 
     void addToCart(Product product);
+
+    void deleteFromCart(int id);
 }

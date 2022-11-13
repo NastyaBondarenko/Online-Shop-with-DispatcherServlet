@@ -25,6 +25,8 @@ public class JdbcProductDao implements ProductDao {
     private static final String GET_BY_ID_SQL = "SELECT id, name, price, creation_date FROM products WHERE id=?;";
     private static final String ADD_SQL_TO_CART = "INSERT INTO carts (name, price, creation_date) VALUES (?,?,?);";
 
+    private static final String DELETE_FROM_CART_SQL = "DELETE FROM carts WHERE id=?;";
+
 
     private final ProductRowMapper productRowMapper = new ProductRowMapper();
     private final DataSource dataSource;
@@ -153,6 +155,18 @@ public class JdbcProductDao implements ProductDao {
 
         } catch (SQLException exception) {
             throw new RuntimeException("Can not add product to database", exception);
+        }
+    }
+
+    @Override
+    public void deleteFromCart(int id) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_CART_SQL)) {
+
+            preparedStatement.setInt(1, Integer.parseInt(String.valueOf(id)));
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Can not delete product from database", e);
         }
     }
 }

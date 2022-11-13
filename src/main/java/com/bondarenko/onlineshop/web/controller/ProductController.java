@@ -79,7 +79,13 @@ public class ProductController {
     @PostMapping("/products/cart/{id}")
     protected String addToCart(@RequestParam int id,@ModelAttribute Product product) {
         productService.addToCart(id);
-        return "redirect:/productCart";
+        return "redirect:/products";
+    }
+
+    @PostMapping("/products/cart/delete/{id}")
+    protected String deleteFromCart(@RequestParam int id) {
+        productService.deleteFromCart(id);
+        return "redirect:/products/cart";
     }
 
 }
