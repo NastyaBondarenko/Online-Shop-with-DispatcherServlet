@@ -68,5 +68,19 @@ public class ProductController {
         productService.update(newProduct);
         return "redirect:/products";
     }
+
+    @GetMapping({"/products/cart"})
+    protected String getAllFromCart(Model model) {
+        List<Product> products = productService.findAll();
+        model.addAttribute("products", products);
+        return "productCart";
+    }
+
+    @PostMapping("/products/cart/{id}")
+    protected String addToCart(@RequestParam int id,@ModelAttribute Product product) {
+        productService.addToCart(id);
+        return "redirect:/productCart";
+    }
+
 }
 

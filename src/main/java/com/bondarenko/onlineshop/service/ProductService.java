@@ -37,4 +37,11 @@ public class ProductService {
     public List<Product> search(String searchText) {
         return productDao.search(searchText);
     }
+
+    public void addToCart(int id) {
+        Product product = productDao.getById(id);
+        LocalDateTime now = LocalDateTime.now();
+        product.setCreationDate(now);
+        productDao.add(product);
+    }
 }
