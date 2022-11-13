@@ -42,6 +42,10 @@ public class ProductService {
         Product product = productDao.getById(id);
         LocalDateTime now = LocalDateTime.now();
         product.setCreationDate(now);
-        productDao.add(product);
+        productDao.addToCart(product);
+    }
+
+    public List<Product> findAllFromCart() {
+        return productDao.findAllFromCart();
     }
 }

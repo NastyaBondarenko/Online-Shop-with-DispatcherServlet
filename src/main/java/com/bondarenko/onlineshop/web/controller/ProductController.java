@@ -71,7 +71,7 @@ public class ProductController {
 
     @GetMapping({"/products/cart"})
     protected String getAllFromCart(Model model) {
-        List<Product> products = productService.findAll();
+        List<Product> products = productService.findAllFromCart();
         model.addAttribute("products", products);
         return "productCart";
     }
