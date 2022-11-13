@@ -21,7 +21,10 @@ public class JdbcProductDao implements ProductDao {
     private static final String DELETE_SQL = "DELETE FROM products WHERE id=?;";
     private static final String UPDATE_SQL = "UPDATE products SET name=?, price=?, creation_date=? WHERE id=?;";
     private static final String SEARCH_SQL = "SELECT id, name, price, creation_date FROM products WHERE  (name) LIKE ?;";
+    private static final String FIND_ALL_FROM_CARTS_SQL = "SELECT id, name, price, creation_date FROM carts;";
     private static final String GET_BY_ID_SQL = "SELECT id, name, price, creation_date FROM products WHERE id=?;";
+    private static final String ADD_SQL_TO_CART = "INSERT INTO carts (name, price, creation_date) VALUES (?,?,?);";
+
 
     private final ProductRowMapper productRowMapper = new ProductRowMapper();
     private final DataSource dataSource;
@@ -119,6 +122,37 @@ public class JdbcProductDao implements ProductDao {
                 }
                 return productRowMapper.mapRow(resultSet);
             }
+        }
+    }
+
+    @Override
+    public List<Product> findAllFromCart() {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(FIND_ALL_FROM_CARTS_SQL)) {
+            List<Product> products = new ArrayList<>();
+            while (resultSet.next()) {
+                Product product = productRowMapper.mapRow(resultSet);
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException exception) {
+            throw new RuntimeException("Cant  get products from cart", exception);
+        }
+    }
+
+    @Override
+    public void addToCart(Product product) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(ADD_SQL_TO_CART)) {
+
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(product.getCreationDate()));
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException exception) {
+            throw new RuntimeException("Can not add product to database", exception);
         }
     }
 }
