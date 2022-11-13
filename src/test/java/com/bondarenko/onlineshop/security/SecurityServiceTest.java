@@ -1,6 +1,8 @@
 package com.bondarenko.onlineshop.security;
 
 import com.bondarenko.onlineshop.entity.SessionData;
+import com.bondarenko.onlineshop.web.config.AppConfiguration;
+import com.bondarenko.onlineshop.web.config.WebConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +10,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import javax.servlet.http.Cookie;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringJUnitWebConfig
-@ContextConfiguration(locations = "classpath:WEB-INF/context.xml")
+@ContextConfiguration(classes = {AppConfiguration.class, WebConfiguration.class})
 public class SecurityServiceTest {
     @Autowired
     private SecurityService securityService;
@@ -52,16 +55,16 @@ public class SecurityServiceTest {
     @Test
     @DisplayName("test Login when User And Password are Not correct")
     public void testLogin_whenUserAndPassword_areNotCorrect() {
-        SessionData sessionData = securityService.login("user", "NotExistingPassword");
-        assertNull(sessionData);
+        Optional<SessionData> sessionData = securityService.login("user", "NotExistingPassword");
+        assertTrue(sessionData.isEmpty());
     }
 
     @Test
     @DisplayName("test Login when User And Password are correct")
     public void testLogin_whenUserAndPassword_areCorrect() {
         String expectedToken = "0";
-        SessionData sessionData = securityService.login("user", "pass");
-        String actualToken = sessionData.getToken();
+        Optional<SessionData> sessionData = securityService.login("user", "pass");
+        String actualToken = sessionData.get().getToken();
         assertNotNull(actualToken);
         assertNotEquals(expectedToken, actualToken);
     }

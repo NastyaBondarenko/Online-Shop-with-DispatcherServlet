@@ -1,6 +1,8 @@
 package com.bondarenko.onlineshop.dao.jdbc;
 
 import com.bondarenko.onlineshop.entity.Product;
+import com.bondarenko.onlineshop.web.config.AppConfiguration;
+import com.bondarenko.onlineshop.web.config.WebConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringJUnitWebConfig
-@ContextConfiguration(locations = "classpath:WEB-INF/context.xml")
+@ContextConfiguration(classes = {AppConfiguration.class, WebConfiguration.class})
 public class JdbcProductDaoITest {
     @Autowired
     private JdbcProductDao jdbcProductDao;
