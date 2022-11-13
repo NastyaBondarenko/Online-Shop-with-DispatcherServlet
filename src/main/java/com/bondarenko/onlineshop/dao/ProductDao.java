@@ -14,4 +14,6 @@ public interface ProductDao {
     void update(Product product);
 
     List<Product> search(String searchText);
+
+    Product getById(int id);
 }

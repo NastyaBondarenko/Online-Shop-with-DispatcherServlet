@@ -4,6 +4,7 @@ import com.bondarenko.onlineshop.dao.ProductDao;
 import com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper;
 import com.bondarenko.onlineshop.entity.Product;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -20,10 +21,10 @@ public class JdbcProductDao implements ProductDao {
     private static final String DELETE_SQL = "DELETE FROM products WHERE id=?;";
     private static final String UPDATE_SQL = "UPDATE products SET name=?, price=?, creation_date=? WHERE id=?;";
     private static final String SEARCH_SQL = "SELECT id, name, price, creation_date FROM products WHERE  (name) LIKE ?;";
+    private static final String GET_BY_ID_SQL = "SELECT id, name, price, creation_date FROM products WHERE id=?;";
 
     private final ProductRowMapper productRowMapper = new ProductRowMapper();
     private final DataSource dataSource;
-
 
     @Override
     public List<Product> findAll() {
@@ -102,6 +103,22 @@ public class JdbcProductDao implements ProductDao {
             return products;
         } catch (SQLException e) {
             throw new RuntimeException("Can not search product with text: " + searchText, e);
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public Product getById(int id) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_SQL)) {
+            preparedStatement.setLong(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.next()) {
+                    throw new RuntimeException("Can't get product with : " + id);
+                }
+                return productRowMapper.mapRow(resultSet);
+            }
         }
     }
 }
