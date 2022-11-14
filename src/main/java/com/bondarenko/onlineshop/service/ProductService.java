@@ -39,17 +39,17 @@ public class ProductService {
     }
 
     public void addToCart(int id) {
-        Product product = productDao.getById(id);
+        Product product = productDao.findById(id);
         LocalDateTime now = LocalDateTime.now();
         product.setCreationDate(now);
         productDao.addToCart(product);
     }
 
-    public List<Product> findAllFromCart() {
-        return productDao.findAllFromCart();
-    }
-
     public void deleteFromCart(int id) {
         productDao.deleteFromCart(id);
+    }
+
+    public List<Product> findAllFromCart() {
+        return productDao.findAllFromCart();
     }
 }
