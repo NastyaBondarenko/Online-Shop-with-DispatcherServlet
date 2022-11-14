@@ -73,11 +73,11 @@ public class ProductController {
     protected String getAllFromCart(Model model) {
         List<Product> products = productService.findAllFromCart();
         model.addAttribute("products", products);
-        return "productCart";
+        return "product_cart";
     }
 
     @PostMapping("/products/cart/{id}")
-    protected String addToCart(@RequestParam int id,@ModelAttribute Product product) {
+    protected String addToCart(@RequestParam int id, @ModelAttribute Product product) {
         productService.addToCart(id);
         return "redirect:/products";
     }
@@ -87,6 +87,5 @@ public class ProductController {
         productService.deleteFromCart(id);
         return "redirect:/products/cart";
     }
-
 }
 
