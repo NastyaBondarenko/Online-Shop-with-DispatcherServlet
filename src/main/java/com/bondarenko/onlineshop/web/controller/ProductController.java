@@ -82,7 +82,7 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @PostMapping("/products/cart/delete/{id}")
+    @PostMapping("/products/cart/delete")
     protected String deleteFromCart(@RequestParam int id) {
         productService.deleteFromCart(id);
         return "redirect:/products/cart";
