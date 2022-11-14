@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
-import javax.servlet.http.Cookie;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,16 +83,15 @@ public class SecurityServiceTest {
     @Test
     @DisplayName("test Is Auth False when Cookies Is Null")
     public void testIsAuthFalse_whenCookiesIsNull() {
-        Cookie[] cookies = null;
-        assertFalse(securityService.isAuth(cookies));
+        assertFalse(securityService.isAuth(null));
     }
 
     @Test
     @DisplayName("test IsAuth False When User Not Logged In")
     void testIsAuthFalseWhenUserNotLoggedIn() {
-        Cookie[] cookies = new Cookie[0];
+        String userToken = String.valueOf(44566);
 
-        assertFalse(securityService.isAuth(cookies));
+        assertFalse(securityService.isAuth(userToken));
     }
 
     @Test
