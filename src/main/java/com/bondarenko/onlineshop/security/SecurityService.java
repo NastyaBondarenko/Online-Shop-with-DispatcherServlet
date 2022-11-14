@@ -7,8 +7,8 @@ import com.google.common.annotations.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -37,20 +37,18 @@ public class SecurityService {
         return Optional.empty();
     }
 
-    public boolean isAuth(Cookie[] cookies) {
-        String userToken;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                userToken = cookie.getValue();
-                for (Session session : sessionList) {
-                    if (session.getToken().equals(userToken)) {
-                        if (session.getExpireDate().isAfter(LocalDateTime.now())) {
-                            return true;
-                        }
-                    }
-                    sessionList.remove(session);
-                    break;
+    public boolean isAuth(String userToken) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Iterator<Session> iterator = sessionList.iterator();
+
+        while (iterator.hasNext()) {
+            Session session = iterator.next();
+            if (session.getToken().equals(userToken)) {
+                if (session.getExpireDate().isAfter(localDateTime)) {
+                    return true;
                 }
+                iterator.remove();
+                break;
             }
         }
         return false;
