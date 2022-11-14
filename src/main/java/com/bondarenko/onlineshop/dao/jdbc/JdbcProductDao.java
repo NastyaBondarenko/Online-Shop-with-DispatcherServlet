@@ -8,7 +8,12 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +26,10 @@ public class JdbcProductDao implements ProductDao {
     private static final String DELETE_SQL = "DELETE FROM products WHERE id=?;";
     private static final String UPDATE_SQL = "UPDATE products SET name=?, price=?, creation_date=? WHERE id=?;";
     private static final String SEARCH_SQL = "SELECT id, name, price, creation_date FROM products WHERE  (name) LIKE ?;";
-    private static final String FIND_ALL_FROM_CARTS_SQL = "SELECT id, name, price, creation_date FROM carts;";
     private static final String GET_BY_ID_SQL = "SELECT id, name, price, creation_date FROM products WHERE id=?;";
-    private static final String ADD_SQL_TO_CART = "INSERT INTO carts (name, price, creation_date) VALUES (?,?,?);";
-
-    private static final String DELETE_FROM_CART_SQL = "DELETE FROM carts WHERE id=?;";
-
+    private static final String FIND_ALL_FROM_CART_SQL = "SELECT id, name, price, creation_date FROM products_cart;";
+    private static final String ADD_TO_CART_SQL = "INSERT INTO products_cart (name, price, creation_date) VALUES (?,?,?);";
+    private static final String DELETE_FROM_CART_SQL = "DELETE FROM products_cart WHERE id=?;";
 
     private final ProductRowMapper productRowMapper = new ProductRowMapper();
     private final DataSource dataSource;
@@ -128,45 +131,40 @@ public class JdbcProductDao implements ProductDao {
     }
 
     @Override
+    @SneakyThrows
     public List<Product> findAllFromCart() {
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(FIND_ALL_FROM_CARTS_SQL)) {
+             ResultSet resultSet = statement.executeQuery(FIND_ALL_FROM_CART_SQL)) {
             List<Product> products = new ArrayList<>();
             while (resultSet.next()) {
                 Product product = productRowMapper.mapRow(resultSet);
                 products.add(product);
             }
             return products;
-        } catch (SQLException exception) {
-            throw new RuntimeException("Cant  get products from cart", exception);
         }
     }
 
     @Override
+    @SneakyThrows
     public void addToCart(Product product) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(ADD_SQL_TO_CART)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(ADD_TO_CART_SQL)) {
 
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(product.getCreationDate()));
             preparedStatement.executeUpdate();
-
-        } catch (SQLException exception) {
-            throw new RuntimeException("Can not add product to database", exception);
         }
     }
 
     @Override
+    @SneakyThrows
     public void deleteFromCart(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_CART_SQL)) {
-
             preparedStatement.setInt(1, Integer.parseInt(String.valueOf(id)));
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Can not delete product from database", e);
         }
     }
 }
