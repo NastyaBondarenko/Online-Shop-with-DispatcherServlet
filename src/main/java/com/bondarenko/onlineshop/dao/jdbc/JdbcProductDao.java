@@ -116,7 +116,7 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     @SneakyThrows
-    public Product getById(int id) {
+    public Product findById(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
