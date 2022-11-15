@@ -15,21 +15,20 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
-
     private final SecurityService securityService;
 
     @GetMapping("/login")
-    protected String getLoginPage() {
-        return "login";
-    }
+    protected String getLoginPage() {return "login";}
 
     @PostMapping("/login")
     protected String login(@RequestParam String login, @RequestParam String password, HttpServletResponse response) {
         Optional<SessionData> sessionDataOptional = securityService.login(login, password);
+
         if (sessionDataOptional.isEmpty()) {
             return "login";
         }
         SessionData sessionData = sessionDataOptional.get();
+
         Cookie cookie = new Cookie("user-token", sessionData.getToken());
         int sessionTime = sessionData.getSessionTime();
         cookie.setMaxAge(sessionTime);
