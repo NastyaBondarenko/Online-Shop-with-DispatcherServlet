@@ -1,4 +1,4 @@
-package com.bondarenko.onlineshop.web.config;
+package com.bondarenko.onlineshop.web.configuration;
 
 import com.bondarenko.onlineshop.web.security.SecurityFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -28,4 +28,3 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         return new Filter[]{new SecurityFilter()};
     }
 }
-

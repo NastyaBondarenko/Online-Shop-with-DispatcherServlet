@@ -1,8 +1,8 @@
 package com.bondarenko.onlineshop.security;
 
 import com.bondarenko.onlineshop.entity.SessionData;
-import com.bondarenko.onlineshop.web.config.AppConfiguration;
-import com.bondarenko.onlineshop.web.config.WebConfiguration;
+import com.bondarenko.onlineshop.web.configuration.AppConfiguration;
+import com.bondarenko.onlineshop.web.configuration.WebConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.bondarenko.onlineshop.web.config;
+package com.bondarenko.onlineshop.web.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
