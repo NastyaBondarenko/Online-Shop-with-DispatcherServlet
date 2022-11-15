@@ -81,15 +81,9 @@ public class SecurityServiceTest {
     }
 
     @Test
-    @DisplayName("test Is Auth False when Cookies Is Null")
-    public void testIsAuthFalse_whenCookiesIsNull() {
-        assertFalse(securityService.isAuth(null));
-    }
-
-    @Test
     @DisplayName("test IsAuth False When User Not Logged In")
     void testIsAuthFalseWhenUserNotLoggedIn() {
-        String userToken = String.valueOf(44566);
+        Optional<String> userToken = Optional.of(String.valueOf(44566));
 
         assertFalse(securityService.isAuth(userToken));
     }
