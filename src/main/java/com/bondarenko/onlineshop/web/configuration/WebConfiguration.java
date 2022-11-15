@@ -30,9 +30,4 @@ public class WebConfiguration implements WebMvcConfigurer {
         resolver.setCache(true);
         return resolver;
     }
-
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
 }
