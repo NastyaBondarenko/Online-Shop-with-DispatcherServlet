@@ -11,10 +11,8 @@ import javax.sql.DataSource;
 public class DataSourceConfiguration {
     @Value("${db.password}")
     private String password;
-
     @Value("${db.username}")
     private String user;
-
     @Value("${db.url}")
     private String url;
 
