@@ -43,7 +43,8 @@ public class SecurityFilter implements Filter {
                 return;
             }
         }
-        String userToken = getUserToken(httpServletRequest).get();
+        Optional<String> userToken = getUserToken(httpServletRequest);
+
         log.info("Check if user is authorized");
         if (userToken.isEmpty() || !securityService.isAuth(userToken)) {
             httpServletResponse.sendRedirect("/login");
