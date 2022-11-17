@@ -40,9 +40,9 @@ public class SecurityService {
     public boolean isAuth(Optional<String> optionalUserToken) {
         LocalDateTime localDateTime = LocalDateTime.now();
         Iterator<Session> iterator = sessionList.iterator();
-        String userToken = optionalUserToken.get();
 
         if (optionalUserToken.isPresent()) {
+            String userToken = optionalUserToken.get();
             while (iterator.hasNext()) {
                 Session session = iterator.next();
                 if (session.getToken().equals(userToken)) {
@@ -59,11 +59,11 @@ public class SecurityService {
 
     @VisibleForTesting
     boolean isValidCredential(String login, String password) {
-        User userFromDB = userService.findUser(login);
-        if (userFromDB != null) {
+        User user = userService.findUser(login);
+        if (user != null) {
             String salt = getSalt(login);
             String encryptedPassword = passwordEncryptor.encryptPasswordWithSalt(password, salt);
-            String passwordFromDB = userFromDB.getPassword();
+            String passwordFromDB = user.getPassword();
             return Objects.equals(encryptedPassword, passwordFromDB);
         }
         return false;
