@@ -1,6 +1,6 @@
 package com.bondarenko.onlineshop.security;
 
-import com.bondarenko.onlineshop.entity.SessionData;
+import com.bondarenko.onlineshop.dto.SessionData;
 import com.bondarenko.onlineshop.web.configuration.AppConfiguration;
 import com.bondarenko.onlineshop.web.configuration.WebConfiguration;
 import org.junit.jupiter.api.DisplayName;

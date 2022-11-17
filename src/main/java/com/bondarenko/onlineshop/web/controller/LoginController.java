@@ -1,6 +1,6 @@
 package com.bondarenko.onlineshop.web.controller;
 
-import com.bondarenko.onlineshop.entity.SessionData;
+import com.bondarenko.onlineshop.dto.SessionData;
 import com.bondarenko.onlineshop.security.SecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
