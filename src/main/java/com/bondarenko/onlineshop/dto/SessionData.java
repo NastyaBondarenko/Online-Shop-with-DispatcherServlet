@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @RequiredArgsConstructor
 public class SessionData {
-    private final String token;
-    private final int sessionTime;
+    private String token;
+    private int sessionTime;
 }
