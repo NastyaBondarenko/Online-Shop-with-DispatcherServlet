@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -62,10 +61,8 @@ public class ProductController {
     }
 
     @PostMapping("/products/update")
-    protected String update(@ModelAttribute Product product, @RequestParam("creation_date") String creationDate) {
-        LocalDateTime date = LocalDateTime.parse(creationDate);
-        Product newProduct = new Product(product.getId(), product.getName(), product.getPrice(), date);
-        productService.update(newProduct);
+    protected String update(@ModelAttribute Product product) {
+        productService.update(product);
         return "redirect:/products";
     }
 
