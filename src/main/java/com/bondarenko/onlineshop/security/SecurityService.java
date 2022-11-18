@@ -48,21 +48,18 @@ public class SecurityService {
     }
 
 
-    public Optional<Session> getSession(Optional<String> optionalUserToken) {
+    public Optional<Session> getSession(String userToken) {
         LocalDateTime localDateTime = LocalDateTime.now();
         Iterator<Session> iterator = sessionList.iterator();
 
-        if (optionalUserToken.isPresent()) {
-            String userToken = optionalUserToken.get();
-            while (iterator.hasNext()) {
-                Session session = iterator.next();
-                if (session.getToken().equals(userToken)) {
-                    if (session.getExpireDate().isAfter(localDateTime)) {
-                        return Optional.of(session);
-                    }
-                    iterator.remove();
-                    break;
+        while (iterator.hasNext()) {
+            Session session = iterator.next();
+            if (session.getToken().equals(userToken)) {
+                if (session.getExpireDate().isAfter(localDateTime)) {
+                    return Optional.of(session);
                 }
+                iterator.remove();
+                break;
             }
         }
         return Optional.empty();

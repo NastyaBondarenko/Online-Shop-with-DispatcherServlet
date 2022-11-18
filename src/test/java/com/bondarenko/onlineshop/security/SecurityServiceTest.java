@@ -90,7 +90,7 @@ public class SecurityServiceTest {
     @Test
     @DisplayName("test IsAuth False When User Not Logged In")
     void testIsAuthFalseWhenUserNotLoggedIn() {
-        Optional<String> userToken = Optional.of(String.valueOf(44566));
+        String userToken = String.valueOf(44566);
 
         assertFalse(securityService.getSession(userToken).isPresent());
     }

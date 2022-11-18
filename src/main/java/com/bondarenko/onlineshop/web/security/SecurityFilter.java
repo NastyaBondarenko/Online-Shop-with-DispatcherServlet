@@ -45,9 +45,14 @@ public class SecurityFilter implements Filter {
                 return;
             }
         }
-        Optional<String> userToken = getUserToken(httpServletRequest);
+        Optional<String> userTokenOptional = getUserToken(httpServletRequest);
 
         log.info("Check if user is authorized");
+        if (userTokenOptional.isEmpty()) {
+            httpServletResponse.sendRedirect("/login");
+            return;
+        }
+        String userToken = userTokenOptional.get();
         Optional<Session> sessionOptional = securityService.getSession(userToken);
 
         if (sessionOptional.isEmpty()) {
@@ -59,10 +64,9 @@ public class SecurityFilter implements Filter {
         CurrentUser.setCurrentUser(session.getUser());
 
         log.info("User is authorized");
-        try{
-        chain.doFilter(request, response);
-
-        }finally {
+        try {
+            chain.doFilter(request, response);
+        } finally {
             CurrentUser.clear();
         }
     }
