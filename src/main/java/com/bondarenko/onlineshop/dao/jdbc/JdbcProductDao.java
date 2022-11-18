@@ -27,9 +27,6 @@ public class JdbcProductDao implements ProductDao {
     private static final String UPDATE_SQL = "UPDATE products SET name=?, price=? WHERE id=?;";
     private static final String SEARCH_SQL = "SELECT id, name, price, creation_date FROM products WHERE  (name) LIKE ?;";
     private static final String GET_BY_ID_SQL = "SELECT id, name, price, creation_date FROM products WHERE id=?;";
-    private static final String FIND_ALL_FROM_CART_SQL = "SELECT id, name, price, creation_date FROM products_cart;";
-    private static final String ADD_TO_CART_SQL = "INSERT INTO products_cart (name, price, creation_date) VALUES (?,?,?);";
-    private static final String DELETE_FROM_CART_SQL = "DELETE FROM products_cart WHERE id=?;";
 
     private final ProductRowMapper productRowMapper = new ProductRowMapper();
     private final DataSource dataSource;
@@ -126,44 +123,6 @@ public class JdbcProductDao implements ProductDao {
                 }
                 return productRowMapper.mapRow(resultSet);
             }
-        }
-    }
-
-    @Override
-    @SneakyThrows
-    public List<Product> findAllFromCart() {
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(FIND_ALL_FROM_CART_SQL)) {
-            List<Product> products = new ArrayList<>();
-            while (resultSet.next()) {
-                Product product = productRowMapper.mapRow(resultSet);
-                products.add(product);
-            }
-            return products;
-        }
-    }
-
-    @Override
-    @SneakyThrows
-    public void addToCart(Product product) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(ADD_TO_CART_SQL)) {
-
-            preparedStatement.setString(1, product.getName());
-            preparedStatement.setDouble(2, product.getPrice());
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(product.getCreationDate()));
-            preparedStatement.executeUpdate();
-        }
-    }
-
-    @Override
-    @SneakyThrows
-    public void deleteFromCart(int id) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_CART_SQL)) {
-            preparedStatement.setInt(1, Integer.parseInt(String.valueOf(id)));
-            preparedStatement.executeUpdate();
         }
     }
 }

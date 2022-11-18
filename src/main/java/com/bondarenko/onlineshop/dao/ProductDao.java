@@ -16,10 +16,4 @@ public interface ProductDao {
     List<Product> search(String searchText);
 
     Product findById(int id);
-
-    List<Product> findAllFromCart();
-
-    void addToCart(Product product);
-
-    void deleteFromCart(int id);
 }

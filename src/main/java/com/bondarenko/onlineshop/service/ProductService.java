@@ -38,21 +38,6 @@ public class ProductService {
         return productDao.search(searchText);
     }
 
-    public void addToCart(int id) {
-        Product product = productDao.findById(id);
-        LocalDateTime now = LocalDateTime.now();
-        product.setCreationDate(now);
-        productDao.addToCart(product);
-    }
-
-    public void deleteFromCart(int id) {
-        productDao.deleteFromCart(id);
-    }
-
-    public List<Product> findAllFromCart() {
-        return productDao.findAllFromCart();
-    }
-
     public Product findById(int id) { //refactor Optional
 
         return productDao.findById(id);
