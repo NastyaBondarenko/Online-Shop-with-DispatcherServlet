@@ -1,5 +1,6 @@
 package com.bondarenko.onlineshop.security;
 
+import com.bondarenko.onlineshop.dto.Credentials;
 import com.bondarenko.onlineshop.dto.SessionData;
 import com.bondarenko.onlineshop.entity.User;
 import com.bondarenko.onlineshop.service.UserService;
@@ -25,11 +26,20 @@ public class SecurityService {
         this.sessionTime = Integer.parseInt(sessionTime);
     }
 
-    public Optional<SessionData> login(String login, String password) {
-        if (isValidCredential(login, password)) {
+//    static class Credentials {
+//        String login;
+//        String password;
+//
+//    }
+
+
+    public Optional<SessionData> login(Credentials credentials) {
+        Optional<User> userOptional = getUser(credentials);
+        if (userOptional.isPresent()) {
             String token = passwordEncryptor.generateToken();
             LocalDateTime expireDataTime = LocalDateTime.now().plusSeconds(sessionTime);
-            Session session = new Session(token, expireDataTime);
+            User user = userOptional.get();
+            Session session = new Session(token, expireDataTime, user);
             sessionList.add(session);
 
             return Optional.of(new SessionData(token, sessionTime));
@@ -37,7 +47,8 @@ public class SecurityService {
         return Optional.empty();
     }
 
-    public boolean isAuth(Optional<String> optionalUserToken) {
+
+    public Optional<Session> getSession(Optional<String> optionalUserToken) {
         LocalDateTime localDateTime = LocalDateTime.now();
         Iterator<Session> iterator = sessionList.iterator();
 
@@ -47,14 +58,36 @@ public class SecurityService {
                 Session session = iterator.next();
                 if (session.getToken().equals(userToken)) {
                     if (session.getExpireDate().isAfter(localDateTime)) {
-                        return true;
+                        return Optional.of(session);
                     }
                     iterator.remove();
                     break;
                 }
             }
         }
-        return false;
+        return Optional.empty();
+    }
+
+
+    @VisibleForTesting
+    String getSalt(String login) {
+        User userLogin = userService.findUser(login);
+        return userLogin.getSalt();
+    }
+
+    private Optional<User> getUser(Credentials credentials) {//refactor isValidCredential
+        String login = credentials.getLogin();
+        User user = userService.findUser(login);
+        if (user != null) {
+            String salt = getSalt(login);
+            String password = credentials.getPassword();
+            String encryptedPassword = passwordEncryptor.encryptPasswordWithSalt(password, salt);
+            String passwordFromDB = user.getPassword();
+            if (Objects.equals(encryptedPassword, passwordFromDB)) {
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
     }
 
     @VisibleForTesting
@@ -67,12 +100,6 @@ public class SecurityService {
             return Objects.equals(encryptedPassword, passwordFromDB);
         }
         return false;
-    }
-
-    @VisibleForTesting
-    String getSalt(String login) {
-        User userLogin = userService.findUser(login);
-        return userLogin.getSalt();
     }
 }
 

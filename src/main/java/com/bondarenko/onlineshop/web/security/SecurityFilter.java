@@ -1,6 +1,8 @@
 package com.bondarenko.onlineshop.web.security;
 
 import com.bondarenko.onlineshop.security.SecurityService;
+import com.bondarenko.onlineshop.security.Session;
+import com.bondarenko.onlineshop.service.CurrentUser;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.WebApplicationContext;
@@ -46,12 +48,23 @@ public class SecurityFilter implements Filter {
         Optional<String> userToken = getUserToken(httpServletRequest);
 
         log.info("Check if user is authorized");
-        if (userToken.isEmpty() || !securityService.isAuth(userToken)) {
+        Optional<Session> sessionOptional = securityService.getSession(userToken);
+
+        if (sessionOptional.isEmpty()) {
             httpServletResponse.sendRedirect("/login");
             return;
         }
+        Session session = sessionOptional.get();
+        request.setAttribute("session", session);
+        CurrentUser.setCurrentUser(session.getUser());
+
         log.info("User is authorized");
+        try{
         chain.doFilter(request, response);
+
+        }finally {
+            CurrentUser.clear();
+        }
     }
 
     private Optional<String> getUserToken(HttpServletRequest request) {

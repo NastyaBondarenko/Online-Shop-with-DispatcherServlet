@@ -1,5 +1,6 @@
 package com.bondarenko.onlineshop.web.controller;
 
+import com.bondarenko.onlineshop.dto.Credentials;
 import com.bondarenko.onlineshop.dto.SessionData;
 import com.bondarenko.onlineshop.security.SecurityService;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +19,15 @@ public class LoginController {
     private final SecurityService securityService;
 
     @GetMapping("/login")
-    protected String getLoginPage() {return "login";}
+    protected String getLoginPage() {
+        return "login";
+    }
 
     @PostMapping("/login")
     protected String login(@RequestParam String login, @RequestParam String password, HttpServletResponse response) {
-        Optional<SessionData> sessionDataOptional = securityService.login(login, password);
+
+        Credentials credentials = new Credentials(login, password);
+        Optional<SessionData> sessionDataOptional = securityService.login(credentials);
 
         if (sessionDataOptional.isEmpty()) {
             return "login";

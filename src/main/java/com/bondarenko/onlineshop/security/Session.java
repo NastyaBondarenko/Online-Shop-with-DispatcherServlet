@@ -1,13 +1,15 @@
 package com.bondarenko.onlineshop.security;
 
-import lombok.AllArgsConstructor;
+import com.bondarenko.onlineshop.entity.User;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @Getter
+@RequiredArgsConstructor
 public class Session {
     private final String token;
     private final LocalDateTime expireDate;
+    private final User user;
 }
