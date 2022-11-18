@@ -1,5 +1,6 @@
 package com.bondarenko.onlineshop.security;
 
+import com.bondarenko.onlineshop.dto.Credentials;
 import com.bondarenko.onlineshop.dto.SessionData;
 import com.bondarenko.onlineshop.web.configuration.AppConfiguration;
 import com.bondarenko.onlineshop.web.configuration.WebConfiguration;
@@ -11,7 +12,11 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringJUnitWebConfig
@@ -54,7 +59,8 @@ public class SecurityServiceTest {
     @Test
     @DisplayName("test Login when User And Password are Not correct")
     public void testLogin_whenUserAndPassword_areNotCorrect() {
-        Optional<SessionData> sessionData = securityService.login("user", "NotExistingPassword");
+        Credentials credentials = new Credentials("user", "NotExistingPassword");
+        Optional<SessionData> sessionData = securityService.login(credentials);
         assertTrue(sessionData.isEmpty());
     }
 
@@ -62,7 +68,8 @@ public class SecurityServiceTest {
     @DisplayName("test Login when User And Password are correct")
     public void testLogin_whenUserAndPassword_areCorrect() {
         String expectedToken = "0";
-        Optional<SessionData> sessionData = securityService.login("user", "pass");
+        Credentials credentials = new Credentials("user", "pass");
+        Optional<SessionData> sessionData = securityService.login(credentials);
         String actualToken = sessionData.get().getToken();
         assertNotNull(actualToken);
         assertNotEquals(expectedToken, actualToken);
@@ -85,7 +92,7 @@ public class SecurityServiceTest {
     void testIsAuthFalseWhenUserNotLoggedIn() {
         Optional<String> userToken = Optional.of(String.valueOf(44566));
 
-        assertFalse(securityService.isAuth(userToken));
+        assertFalse(securityService.getSession(userToken).isPresent());
     }
 
     @Test
