@@ -1,7 +1,7 @@
 package com.bondarenko.onlineshop.web.controller;
 
-import com.bondarenko.onlineshop.dto.Credentials;
-import com.bondarenko.onlineshop.dto.SessionData;
+import com.bondarenko.onlineshop.dto.CredentialsDto;
+import com.bondarenko.onlineshop.dto.SessionDataDto;
 import com.bondarenko.onlineshop.security.SecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,16 +26,16 @@ public class LoginController {
     @PostMapping("/login")
     protected String login(@RequestParam String login, @RequestParam String password, HttpServletResponse response) {
 
-        Credentials credentials = new Credentials(login, password);
-        Optional<SessionData> sessionDataOptional = securityService.login(credentials);
+        CredentialsDto credentialsDto = new CredentialsDto(login, password);
+        Optional<SessionDataDto> sessionDataOptional = securityService.login(credentialsDto);
 
         if (sessionDataOptional.isEmpty()) {
             return "login";
         }
-        SessionData sessionData = sessionDataOptional.get();
+        SessionDataDto sessionDataDto = sessionDataOptional.get();
 
-        Cookie cookie = new Cookie("user-token", sessionData.getToken());
-        int sessionTime = sessionData.getSessionTime();
+        Cookie cookie = new Cookie("user-token", sessionDataDto.getToken());
+        int sessionTime = sessionDataDto.getSessionTime();
         cookie.setMaxAge(sessionTime);
         response.addCookie(cookie);
         return "redirect:/";
