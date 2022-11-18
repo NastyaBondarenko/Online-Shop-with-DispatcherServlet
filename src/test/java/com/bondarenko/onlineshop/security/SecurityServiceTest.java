@@ -1,7 +1,7 @@
 package com.bondarenko.onlineshop.security;
 
-import com.bondarenko.onlineshop.dto.Credentials;
-import com.bondarenko.onlineshop.dto.SessionData;
+import com.bondarenko.onlineshop.dto.CredentialsDto;
+import com.bondarenko.onlineshop.dto.SessionDataDto;
 import com.bondarenko.onlineshop.web.configuration.AppConfiguration;
 import com.bondarenko.onlineshop.web.configuration.WebConfiguration;
 import org.junit.jupiter.api.DisplayName;
@@ -59,8 +59,8 @@ public class SecurityServiceTest {
     @Test
     @DisplayName("test Login when User And Password are Not correct")
     public void testLogin_whenUserAndPassword_areNotCorrect() {
-        Credentials credentials = new Credentials("user", "NotExistingPassword");
-        Optional<SessionData> sessionData = securityService.login(credentials);
+        CredentialsDto credentialsDto = new CredentialsDto("user", "NotExistingPassword");
+        Optional<SessionDataDto> sessionData = securityService.login(credentialsDto);
         assertTrue(sessionData.isEmpty());
     }
 
@@ -68,8 +68,8 @@ public class SecurityServiceTest {
     @DisplayName("test Login when User And Password are correct")
     public void testLogin_whenUserAndPassword_areCorrect() {
         String expectedToken = "0";
-        Credentials credentials = new Credentials("user", "pass");
-        Optional<SessionData> sessionData = securityService.login(credentials);
+        CredentialsDto credentialsDto = new CredentialsDto("user", "pass");
+        Optional<SessionDataDto> sessionData = securityService.login(credentialsDto);
         String actualToken = sessionData.get().getToken();
         assertNotNull(actualToken);
         assertNotEquals(expectedToken, actualToken);
@@ -78,13 +78,15 @@ public class SecurityServiceTest {
     @Test
     @DisplayName("test Check Password")
     public void testCheckPassword_whenPasswordIsValid() {
-        assertTrue(securityService.isValidCredential("user", "pass"));
+        CredentialsDto credentialsDto = new CredentialsDto("user", "pass");
+        assertTrue(securityService.getUser(credentialsDto).isPresent());
     }
 
     @Test
     @DisplayName("test Check Password when Password Is Not Valid")
     public void testCheckPassword_whenPasswordIsNotValid() {
-        assertFalse(securityService.isValidCredential("user", "1234"));
+        CredentialsDto credentialsDto = new CredentialsDto("user", "1234");
+        assertFalse(securityService.getUser(credentialsDto).isPresent());
     }
 
     @Test

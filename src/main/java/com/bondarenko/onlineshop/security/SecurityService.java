@@ -1,7 +1,7 @@
 package com.bondarenko.onlineshop.security;
 
-import com.bondarenko.onlineshop.dto.Credentials;
-import com.bondarenko.onlineshop.dto.SessionData;
+import com.bondarenko.onlineshop.dto.CredentialsDto;
+import com.bondarenko.onlineshop.dto.SessionDataDto;
 import com.bondarenko.onlineshop.entity.User;
 import com.bondarenko.onlineshop.service.UserService;
 import com.google.common.annotations.VisibleForTesting;
@@ -26,15 +26,8 @@ public class SecurityService {
         this.sessionTime = Integer.parseInt(sessionTime);
     }
 
-//    static class Credentials {
-//        String login;
-//        String password;
-//
-//    }
-
-
-    public Optional<SessionData> login(Credentials credentials) {
-        Optional<User> userOptional = getUser(credentials);
+    public Optional<SessionDataDto> login(CredentialsDto credentialsDto) {
+        Optional<User> userOptional = getUser(credentialsDto);
         if (userOptional.isPresent()) {
             String token = passwordEncryptor.generateToken();
             LocalDateTime expireDataTime = LocalDateTime.now().plusSeconds(sessionTime);
@@ -42,11 +35,10 @@ public class SecurityService {
             Session session = new Session(token, expireDataTime, user);
             sessionList.add(session);
 
-            return Optional.of(new SessionData(token, sessionTime));
+            return Optional.of(new SessionDataDto(token, sessionTime));
         }
         return Optional.empty();
     }
-
 
     public Optional<Session> getSession(String userToken) {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -65,19 +57,19 @@ public class SecurityService {
         return Optional.empty();
     }
 
-
     @VisibleForTesting
     String getSalt(String login) {
         User userLogin = userService.findUser(login);
         return userLogin.getSalt();
     }
 
-    private Optional<User> getUser(Credentials credentials) {//refactor isValidCredential
-        String login = credentials.getLogin();
+    @VisibleForTesting
+    Optional<User> getUser(CredentialsDto credentialsDto) {//refactor isValidCredential
+        String login = credentialsDto.getLogin();
         User user = userService.findUser(login);
         if (user != null) {
             String salt = getSalt(login);
-            String password = credentials.getPassword();
+            String password = credentialsDto.getPassword();
             String encryptedPassword = passwordEncryptor.encryptPasswordWithSalt(password, salt);
             String passwordFromDB = user.getPassword();
             if (Objects.equals(encryptedPassword, passwordFromDB)) {
@@ -88,7 +80,7 @@ public class SecurityService {
     }
 
     @VisibleForTesting
-    boolean isValidCredential(String login, String password) {
+    boolean isValidCredential(String login, String password) {//Optional
         User user = userService.findUser(login);
         if (user != null) {
             String salt = getSalt(login);
@@ -99,5 +91,4 @@ public class SecurityService {
         return false;
     }
 }
-
 

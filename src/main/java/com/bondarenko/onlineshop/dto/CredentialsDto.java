@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Credentials {
-    String login;
-    String password;
+public class CredentialsDto {
+    private String login;
+    private String password;
 }
