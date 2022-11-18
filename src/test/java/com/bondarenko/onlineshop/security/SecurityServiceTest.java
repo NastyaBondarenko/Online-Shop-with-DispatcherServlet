@@ -37,16 +37,6 @@ public class SecurityServiceTest {
     }
 
     @Test
-    @DisplayName("test Generate Salt")
-    public void testGenerateSalt() {
-        String actualSalt = securityService.getSalt("user");
-        String expectedSalt = "4A17982C";
-
-        assertNotNull(securityService.getSalt("user"));
-        assertEquals(expectedSalt, actualSalt);
-    }
-
-    @Test
     @DisplayName("test Generate Hash")
     public void testGenerateHash() {
         String actualHash = passwordEncryptor.hash("user");
