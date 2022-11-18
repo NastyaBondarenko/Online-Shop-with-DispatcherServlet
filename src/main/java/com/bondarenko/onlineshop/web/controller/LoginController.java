@@ -26,8 +26,8 @@ public class LoginController {
     @PostMapping("/login")
     protected String login(@RequestParam String login, @RequestParam String password, HttpServletResponse response) {
 
-        CredentialsDto credentialsDto = new CredentialsDto(login, password);
-        Optional<SessionDataDto> sessionDataOptional = securityService.login(credentialsDto);
+        CredentialsDto credentials = new CredentialsDto(login, password);
+        Optional<SessionDataDto> sessionDataOptional = securityService.login(credentials);
 
         if (sessionDataOptional.isEmpty()) {
             return "login";
