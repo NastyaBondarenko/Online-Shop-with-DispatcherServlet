@@ -57,19 +57,16 @@ public class SecurityService {
         return Optional.empty();
     }
 
-    @VisibleForTesting
-    String getSalt(String login) {
-        User userLogin = userService.findUser(login);
-        return userLogin.getSalt();
-    }
 
     @VisibleForTesting
-    Optional<User> getUser(CredentialsDto credentialsDto) {//refactor isValidCredential
+    Optional<User> getUser(CredentialsDto credentialsDto) {
         String login = credentialsDto.getLogin();
-        User user = userService.findUser(login);
-        if (user != null) {
-            String salt = getSalt(login);
-            String password = credentialsDto.getPassword();
+        String password = credentialsDto.getPassword();
+        Optional<User> userOptional = userService.findUser(login);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            String salt = user.getSalt();
             String encryptedPassword = passwordEncryptor.encryptPasswordWithSalt(password, salt);
             String passwordFromDB = user.getPassword();
             if (Objects.equals(encryptedPassword, passwordFromDB)) {
@@ -77,18 +74,6 @@ public class SecurityService {
             }
         }
         return Optional.empty();
-    }
-
-    @VisibleForTesting
-    boolean isValidCredential(String login, String password) {//Optional
-        User user = userService.findUser(login);
-        if (user != null) {
-            String salt = getSalt(login);
-            String encryptedPassword = passwordEncryptor.encryptPasswordWithSalt(password, salt);
-            String passwordFromDB = user.getPassword();
-            return Objects.equals(encryptedPassword, passwordFromDB);
-        }
-        return false;
     }
 }
 
