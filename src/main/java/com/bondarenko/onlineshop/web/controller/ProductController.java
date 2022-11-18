@@ -1,12 +1,14 @@
 package com.bondarenko.onlineshop.web.controller;
 
 import com.bondarenko.onlineshop.entity.Product;
-import com.bondarenko.onlineshop.security.Session;
 import com.bondarenko.onlineshop.service.CartService;
 import com.bondarenko.onlineshop.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -75,13 +77,11 @@ public class ProductController {
         return "product_cart";
     }
 
-
     @PostMapping("/products/cart/{id}")
     protected String addToCart(@RequestParam int id) {
         cartService.addToCart(id);
         return "redirect:/products";
     }
-
 
     @PostMapping("/products/cart/delete")
     protected String deleteFromCart(@RequestParam int id) {
