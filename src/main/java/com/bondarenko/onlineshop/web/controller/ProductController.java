@@ -69,15 +69,15 @@ public class ProductController {
     }
 
     @GetMapping({"/products/cart"})
-    protected String getAllFromCart(Model model, @RequestAttribute Session session) {
+    protected String getAllFromCart(Model model) {
         List<Product> cart = cartService.getCart();
-        model.addAttribute("products", cart);
+        model.addAttribute("cart", cart);
         return "product_cart";
     }
 
 
     @PostMapping("/products/cart/{id}")
-    protected String addToCart(@RequestParam int id, @RequestAttribute Session session) {
+    protected String addToCart(@RequestParam int id) {
         cartService.addToCart(id);
         return "redirect:/products";
     }
