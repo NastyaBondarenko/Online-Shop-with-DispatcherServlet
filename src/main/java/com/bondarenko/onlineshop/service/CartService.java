@@ -11,13 +11,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class CartService {
+    private final Map<User, List<Product>> userToCartMap = new ConcurrentHashMap<>();
     private ProductService productService;
 
     public CartService(ProductService productService) {
         this.productService = productService;
     }
-
-    private final Map<User, List<Product>> userToCartMap = new ConcurrentHashMap<>();
 
     public List<Product> getCart() {
 
