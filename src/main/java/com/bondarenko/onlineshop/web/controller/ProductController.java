@@ -1,22 +1,24 @@
 package com.bondarenko.onlineshop.web.controller;
 
 import com.bondarenko.onlineshop.entity.Product;
+import com.bondarenko.onlineshop.security.Session;
+import com.bondarenko.onlineshop.service.CartService;
 import com.bondarenko.onlineshop.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+
 public class ProductController {
     private final ProductService productService;
+    private final CartService cartService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, CartService cartService) {
         this.productService = productService;
+        this.cartService = cartService;
     }
 
     @GetMapping({"/products", "/*"})
@@ -67,22 +69,23 @@ public class ProductController {
     }
 
     @GetMapping({"/products/cart"})
-    protected String getAllFromCart(Model model) {
-        List<Product> products = productService.findAllFromCart();
-        model.addAttribute("products", products);
+    protected String getAllFromCart(Model model, @RequestAttribute Session session) {
+        List<Product> cart = cartService.getCart();
+        model.addAttribute("products", cart);
         return "product_cart";
     }
 
+
     @PostMapping("/products/cart/{id}")
-    protected String addToCart(@RequestParam int id, @ModelAttribute Product product) {
-        productService.addToCart(id);
+    protected String addToCart(@RequestParam int id, @RequestAttribute Session session) {
+        cartService.addToCart(id);
         return "redirect:/products";
     }
 
+
     @PostMapping("/products/cart/delete")
     protected String deleteFromCart(@RequestParam int id) {
-        productService.deleteFromCart(id);
+        cartService.deleteFromCart(id);
         return "redirect:/products/cart";
     }
 }
-

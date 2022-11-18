@@ -52,4 +52,9 @@ public class ProductService {
     public List<Product> findAllFromCart() {
         return productDao.findAllFromCart();
     }
+
+    public Product findById(int id) { //refactor Optional
+
+        return productDao.findById(id);
+    }
 }
