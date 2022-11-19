@@ -38,7 +38,7 @@ public class ProductService {
         return productDao.search(searchText);
     }
 
-    public Product findById(int id) { //refactor Optional
+    public Product findById(int id) {
 
         return productDao.findById(id);
     }
