@@ -2,6 +2,7 @@ package com.bondarenko.onlineshop.service;
 
 import com.bondarenko.onlineshop.entity.Product;
 import com.bondarenko.onlineshop.entity.User;
+import com.bondarenko.onlineshop.security.CurrentUser;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

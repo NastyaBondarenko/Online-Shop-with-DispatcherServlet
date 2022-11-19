@@ -2,7 +2,7 @@ package com.bondarenko.onlineshop.web.security;
 
 import com.bondarenko.onlineshop.security.SecurityService;
 import com.bondarenko.onlineshop.security.Session;
-import com.bondarenko.onlineshop.service.CurrentUser;
+import com.bondarenko.onlineshop.security.CurrentUser;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.WebApplicationContext;

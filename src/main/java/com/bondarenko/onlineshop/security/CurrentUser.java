@@ -1,4 +1,4 @@
-package com.bondarenko.onlineshop.service;
+package com.bondarenko.onlineshop.security;
 
 import com.bondarenko.onlineshop.entity.User;
 
