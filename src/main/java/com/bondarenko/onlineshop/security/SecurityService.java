@@ -69,6 +69,7 @@ public class SecurityService {
             String salt = user.getSalt();
             String encryptedPassword = passwordEncryptor.encryptPasswordWithSalt(password, salt);
             String passwordFromDB = user.getPassword();
+
             if (Objects.equals(encryptedPassword, passwordFromDB)) {
                 return Optional.of(user);
             }
