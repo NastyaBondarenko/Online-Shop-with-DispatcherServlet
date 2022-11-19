@@ -26,8 +26,8 @@ public class SecurityService {
         this.sessionTime = Integer.parseInt(sessionTime);
     }
 
-    public Optional<SessionDataDto> login(CredentialsDto credentialsDto) {
-        Optional<User> userOptional = getUser(credentialsDto);
+    public Optional<SessionDataDto> login(CredentialsDto credentials) {
+        Optional<User> userOptional = getUser(credentials);
         if (userOptional.isPresent()) {
             String token = passwordEncryptor.generateToken();
             LocalDateTime expireDataTime = LocalDateTime.now().plusSeconds(sessionTime);
@@ -59,9 +59,9 @@ public class SecurityService {
 
 
     @VisibleForTesting
-    Optional<User> getUser(CredentialsDto credentialsDto) {
-        String login = credentialsDto.getLogin();
-        String password = credentialsDto.getPassword();
+    Optional<User> getUser(CredentialsDto credentials) {
+        String login = credentials.getLogin();
+        String password = credentials.getPassword();
         Optional<User> userOptional = userService.findUser(login);
 
         if (userOptional.isPresent()) {
