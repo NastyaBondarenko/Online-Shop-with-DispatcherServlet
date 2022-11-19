@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource({"classpath:application.properties"})
 @ComponentScan(basePackages = {"com.bondarenko.onlineshop"}, excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.bondarenko.onlineshop.web")})
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com\\.bondarenko\\.onlineshop\\.web..*")})
 public class AppConfiguration {
 
 }
