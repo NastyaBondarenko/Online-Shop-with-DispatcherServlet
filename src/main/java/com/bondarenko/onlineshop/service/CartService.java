@@ -27,16 +27,16 @@ public class CartService {
 
     public void addToCart(int id) {
         User currentUser = CurrentUser.getCurrentUser();
+        Product product = productService.findById(id);
+        List<Product> cart;
+
         if (userToCartMap.containsKey(currentUser)) {
-            List<Product> cart = userToCartMap.get(currentUser);
-            Product product = productService.findById(id);
-            cart.add(product);
+            cart = userToCartMap.get(currentUser);
         } else {
-            List<Product> cart = new ArrayList<>();
+            cart = new ArrayList<>();
             userToCartMap.put(currentUser, cart);
-            Product product = productService.findById(id);
-            cart.add(product);
         }
+        cart.add(product);
     }
 
     public void deleteFromCart(int id) {
