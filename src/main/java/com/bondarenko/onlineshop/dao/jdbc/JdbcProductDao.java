@@ -2,17 +2,14 @@ package com.bondarenko.onlineshop.dao.jdbc;
 
 import com.bondarenko.onlineshop.dao.ProductDao;
 import com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.JdbcTemplate;
-//import com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.JdbcTemplate;
 import com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper;
 import com.bondarenko.onlineshop.entity.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-//import org.springframework.jdbc.core.BeanPropertyRowMapper;
-//import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,7 +22,6 @@ public class JdbcProductDao implements ProductDao {
     private static final String GET_BY_ID_SQL = "SELECT id, name, price, creation_date FROM products WHERE id=?;";
     private final ProductRowMapper productRowMapper = new ProductRowMapper();
     private final JdbcTemplate jdbcTemplate;
-
 
     @Override
     public List<Product> findAll() {
@@ -49,13 +45,12 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     @SneakyThrows
-    public Product findById(int id) {
-        return (Product) jdbcTemplate.queryObject(GET_BY_ID_SQL, productRowMapper, id);
+    public Optional<Product> findById(int id) {
+        return Optional.ofNullable((Product) jdbcTemplate.queryObject(GET_BY_ID_SQL, productRowMapper, id));
     }
 
     @Override
     public List<Product> search(String searchText) {
         return jdbcTemplate.query(SEARCH_SQL, productRowMapper, searchText);
-
     }
 }

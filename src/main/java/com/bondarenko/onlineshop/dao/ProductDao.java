@@ -3,6 +3,7 @@ package com.bondarenko.onlineshop.dao;
 import com.bondarenko.onlineshop.entity.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductDao {
     List<Product> findAll();
@@ -15,5 +16,5 @@ public interface ProductDao {
 
     List<Product> search(String searchText);
 
-    Product findById(int id);
+    Optional<Product> findById(int id);
 }

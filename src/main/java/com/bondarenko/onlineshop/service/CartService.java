@@ -27,7 +27,7 @@ public class CartService {
 
     public void addToCart(int id) {
         User currentUser = CurrentUser.getCurrentUser();
-        Product product = productService.findById(id);
+        Product product = productService.findById(id).get();
         List<Product> cart;
 
         if (userToCartMap.containsKey(currentUser)) {

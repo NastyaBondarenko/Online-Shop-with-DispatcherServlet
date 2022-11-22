@@ -13,6 +13,6 @@ public class UserService {
     private final UserDao userDao;
 
     public Optional<User> findUser(String login) {
-        return Optional.ofNullable(userDao.findUser(login));
+        return userDao.findUser(login);
     }
 }

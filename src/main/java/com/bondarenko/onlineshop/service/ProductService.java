@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
 public class ProductService {
-    private ProductDao productDao;
+    private final ProductDao productDao;
 
     public ProductService(ProductDao productDao) {
         this.productDao = productDao;
@@ -38,8 +38,7 @@ public class ProductService {
         return productDao.search(searchText);
     }
 
-    public Product findById(int id) {
-
+    public Optional<Product> findById(int id) {
         return productDao.findById(id);
     }
 }
