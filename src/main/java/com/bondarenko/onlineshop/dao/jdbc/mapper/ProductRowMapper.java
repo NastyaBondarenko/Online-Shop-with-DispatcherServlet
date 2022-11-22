@@ -19,7 +19,7 @@ public class ProductRowMapper implements RowMapper<Product> {
                 id(id)
                 .name(name)
                 .price(price)
-                .creationDate((creationDateTimesTemp.toLocalDateTime()))
+                .creationDate(creationDateTimesTemp.toLocalDateTime())
                 .build();
     }
 }

@@ -1,11 +1,12 @@
 package com.bondarenko.onlineshop.dao.jdbc.mapper;
 
+import com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.RowMapper;
 import com.bondarenko.onlineshop.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserRowMapper {
+public class UserRowMapper implements RowMapper<User> {
     public User mapRow(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String login = resultSet.getString("login");
