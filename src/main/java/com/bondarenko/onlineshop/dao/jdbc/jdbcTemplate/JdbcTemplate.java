@@ -1,75 +1,43 @@
 package com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate;
 
 
-import com.bondarenko.onlineshop.entity.Product;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class JdbcTemplate<T> {
-    private DataSource dataSource;
-    public Product product;
+    private final DataSource dataSource;
+    private final ResultSetExecutorImpl resultSetExecutor = new ResultSetExecutorImpl();
 
-    public JdbcTemplate(DataSource dataSource) {
-        this.dataSource = dataSource;
+    @SneakyThrows
+    public <T> List<T> query(String sql, RowMapper<T> rowMapper, Object... arguments) {
+        PreparedStatement preparedStatement = getPreparedStatement(sql);
+        ResultSet resultSet = resultSetExecutor.getResultSet(sql, arguments, preparedStatement);
+        return resultSetExecutor.getData(rowMapper, resultSet);
     }
 
     @SneakyThrows
-    public List<T> query(String sql, RowMapper<T> rowMapper, Object... args) {
-        List<T> products = new ArrayList<>();
-
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        int row = 1;
-        for (Object arg : args) {
-            preparedStatement.setObject(row, arg);
-            row++;
-        }
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        while (resultSet.next()) {
-            T product = rowMapper.mapRow(resultSet);
-            products.add(product);
-
-        }
-        return products;
-
+    public T queryObject(String sql, RowMapper<T> rowMapper, T... arguments) {
+        PreparedStatement preparedStatement = getPreparedStatement(sql);
+        ResultSet resultSet = resultSetExecutor.getResultSet(sql, arguments, preparedStatement);
+        return resultSetExecutor.getData(rowMapper, resultSet).get(0);
     }
 
     @SneakyThrows
-    public int executeUpdate(String sql, Object... args) {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        int row = 1;
-        for (Object arg : args) {
-            preparedStatement.setObject(row, arg);
-            row++;
-        }
-        preparedStatement.executeUpdate();
-        return row;
+    public int executeUpdate(String sql, Object... arguments) {
+        PreparedStatement preparedStatement = getPreparedStatement(sql);
+        return resultSetExecutor.getRowNumber(preparedStatement, arguments);
     }
 
-
     @SneakyThrows
-    public T queryObject(String sql, RowMapper<T> rowMapper, Object... args) {// [] objects
+    private PreparedStatement getPreparedStatement(String sql) {
         Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        int row = 1;
-        for (Object arg : args) {
-            preparedStatement.setObject(row, arg);
-            row++;
-        }
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (!resultSet.next()) {
-            throw new RuntimeException("Can't get product with : " + args);
-        }
-        return rowMapper.mapRow(resultSet);
+        return connection.prepareStatement(sql);
     }
 }
