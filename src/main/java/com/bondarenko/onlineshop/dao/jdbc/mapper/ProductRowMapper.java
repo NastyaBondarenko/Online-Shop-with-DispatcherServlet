@@ -1,12 +1,13 @@
 package com.bondarenko.onlineshop.dao.jdbc.mapper;
 
+import com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.RowMapper;
 import com.bondarenko.onlineshop.entity.Product;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class ProductRowMapper {
+public class ProductRowMapper implements RowMapper<Product> {
 
     public Product mapRow(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
@@ -18,11 +19,7 @@ public class ProductRowMapper {
                 id(id)
                 .name(name)
                 .price(price)
-                .creationDate(creationDateTimesTemp.toLocalDateTime())
+                .creationDate((creationDateTimesTemp.toLocalDateTime()))
                 .build();
     }
 }
-
-
-
-
