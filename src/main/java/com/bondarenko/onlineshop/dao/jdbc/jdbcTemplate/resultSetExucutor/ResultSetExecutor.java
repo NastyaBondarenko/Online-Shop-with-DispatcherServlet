@@ -1,4 +1,6 @@
-package com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate;
+package com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.resultSetExucutor;
+
+import com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.RowMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,5 +11,5 @@ public interface ResultSetExecutor {
 
     <T> List<T> getData(RowMapper<T> rowMapper, ResultSet resultSet);
 
-    int getRowNumber(PreparedStatement preparedStatement, Object[] arguments);
+    int getRowQuantity(PreparedStatement preparedStatement, Object[] arguments);
 }

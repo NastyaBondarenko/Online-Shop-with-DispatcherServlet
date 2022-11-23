@@ -1,6 +1,7 @@
 package com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate;
 
 
+import com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.resultSetExucutor.ResultSetExecutorImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
@@ -37,7 +38,7 @@ public class JdbcTemplate<T> {
     public int executeUpdate(String sql, Object... arguments) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            return resultSetExecutor.getRowNumber(preparedStatement, arguments);
+            return resultSetExecutor.getRowQuantity(preparedStatement, arguments);
         }
     }
 }

@@ -1,5 +1,6 @@
-package com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate;
+package com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.resultSetExucutor;
 
+import com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.RowMapper;
 import lombok.SneakyThrows;
 
 import java.sql.PreparedStatement;
@@ -28,7 +29,7 @@ public class ResultSetExecutorImpl implements ResultSetExecutor {
     }
 
     @SneakyThrows
-    public int getRowNumber(PreparedStatement preparedStatement, Object[] arguments) {
+    public int getRowQuantity(PreparedStatement preparedStatement, Object[] arguments) {
         int rowNumber = 1;
         for (Object argument : arguments) {
             preparedStatement.setObject(rowNumber++, argument);
