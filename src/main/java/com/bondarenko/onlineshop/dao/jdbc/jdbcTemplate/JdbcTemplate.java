@@ -17,7 +17,7 @@ public class JdbcTemplate<T> {
     private final ResultSetExecutorImpl resultSetExecutor = new ResultSetExecutorImpl();
 
     @SneakyThrows
-    public <T> List<T> query(String sql, RowMapper<T> rowMapper, Object... arguments) {
+    public List<T> query(String sql, RowMapper<T> rowMapper, T... arguments) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = resultSetExecutor.getResultSet(preparedStatement, arguments);
@@ -35,7 +35,7 @@ public class JdbcTemplate<T> {
     }
 
     @SneakyThrows
-    public int executeUpdate(String sql, Object... arguments) {
+    public int executeUpdate(String sql, T... arguments) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             return resultSetExecutor.getRowQuantity(preparedStatement, arguments);
