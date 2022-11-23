@@ -17,27 +17,27 @@ public class JdbcTemplate<T> {
 
     @SneakyThrows
     public <T> List<T> query(String sql, RowMapper<T> rowMapper, Object... arguments) {
-        PreparedStatement preparedStatement = getPreparedStatement(sql);
-        ResultSet resultSet = resultSetExecutor.getResultSet(sql, arguments, preparedStatement);
-        return resultSetExecutor.getData(rowMapper, resultSet);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = resultSetExecutor.getResultSet(sql, arguments, preparedStatement);
+            return resultSetExecutor.getData(rowMapper, resultSet);
+        }
     }
 
     @SneakyThrows
     public T queryObject(String sql, RowMapper<T> rowMapper, T... arguments) {
-        PreparedStatement preparedStatement = getPreparedStatement(sql);
-        ResultSet resultSet = resultSetExecutor.getResultSet(sql, arguments, preparedStatement);
-        return resultSetExecutor.getData(rowMapper, resultSet).get(0);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = resultSetExecutor.getResultSet(sql, arguments, preparedStatement);
+            return resultSetExecutor.getData(rowMapper, resultSet).get(0);
+        }
     }
 
     @SneakyThrows
     public int executeUpdate(String sql, Object... arguments) {
-        PreparedStatement preparedStatement = getPreparedStatement(sql);
-        return resultSetExecutor.getRowNumber(preparedStatement, arguments);
-    }
-
-    @SneakyThrows
-    private PreparedStatement getPreparedStatement(String sql) {
-        Connection connection = dataSource.getConnection();
-        return connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            return resultSetExecutor.getRowNumber(preparedStatement, arguments);
+        }
     }
 }
