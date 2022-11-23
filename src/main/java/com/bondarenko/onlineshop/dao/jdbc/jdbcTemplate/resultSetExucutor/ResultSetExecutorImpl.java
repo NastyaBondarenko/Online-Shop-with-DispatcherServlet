@@ -10,9 +10,9 @@ import java.util.List;
 
 public class ResultSetExecutorImpl implements ResultSetExecutor {
     @SneakyThrows
-    public ResultSet getResultSet(String sql, Object[] arguments, PreparedStatement preparedStatement) {
+    public <T> ResultSet getResultSet(PreparedStatement preparedStatement, T... arguments) {
         int rowNumber = 1;
-        for (Object argument : arguments) {
+        for (T argument : arguments) {
             preparedStatement.setObject(rowNumber++, argument);
         }
         return preparedStatement.executeQuery();
@@ -29,9 +29,9 @@ public class ResultSetExecutorImpl implements ResultSetExecutor {
     }
 
     @SneakyThrows
-    public int getRowQuantity(PreparedStatement preparedStatement, Object[] arguments) {
+    public <T> int getRowQuantity(PreparedStatement preparedStatement, T... arguments) {
         int rowNumber = 1;
-        for (Object argument : arguments) {
+        for (T argument : arguments) {
             preparedStatement.setObject(rowNumber++, argument);
         }
         preparedStatement.executeUpdate();

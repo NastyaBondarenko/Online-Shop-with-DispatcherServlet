@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.util.List;
 
 public interface ResultSetExecutor {
-    ResultSet getResultSet(String sql, Object[] args, PreparedStatement preparedStatement);
+    <T> ResultSet getResultSet(PreparedStatement preparedStatement, T... arguments);
 
     <T> List<T> getData(RowMapper<T> rowMapper, ResultSet resultSet);
 
-    int getRowQuantity(PreparedStatement preparedStatement, Object[] arguments);
+    <T> int getRowQuantity(PreparedStatement preparedStatement, T... arguments);
 }

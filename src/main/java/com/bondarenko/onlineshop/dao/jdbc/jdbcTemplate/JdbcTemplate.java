@@ -20,7 +20,7 @@ public class JdbcTemplate<T> {
     public <T> List<T> query(String sql, RowMapper<T> rowMapper, Object... arguments) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            ResultSet resultSet = resultSetExecutor.getResultSet(sql, arguments, preparedStatement);
+            ResultSet resultSet = resultSetExecutor.getResultSet(preparedStatement, arguments);
             return resultSetExecutor.getData(rowMapper, resultSet);
         }
     }
@@ -29,7 +29,7 @@ public class JdbcTemplate<T> {
     public T queryObject(String sql, RowMapper<T> rowMapper, T... arguments) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            ResultSet resultSet = resultSetExecutor.getResultSet(sql, arguments, preparedStatement);
+            ResultSet resultSet = resultSetExecutor.getResultSet(preparedStatement, arguments);
             return resultSetExecutor.getData(rowMapper, resultSet).get(0);
         }
     }
