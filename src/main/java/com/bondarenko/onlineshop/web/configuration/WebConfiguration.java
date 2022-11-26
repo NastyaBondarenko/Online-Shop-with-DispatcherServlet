@@ -11,6 +11,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 @Configuration
+@EnableWebMvc
 @ComponentScan(basePackages = {"com.bondarenko.onlineshop.web.controller"})
 public class WebConfiguration implements WebMvcConfigurer {
 
