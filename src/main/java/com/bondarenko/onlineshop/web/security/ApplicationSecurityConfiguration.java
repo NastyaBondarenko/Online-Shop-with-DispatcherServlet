@@ -14,6 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.bondarenko.onlineshop.web.security.ApplicationUserPermission.USER_GET;
 import static com.bondarenko.onlineshop.web.security.ApplicationUserRole.ADMIN;
@@ -50,9 +54,21 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .authenticated()
                 .and()
 //                .httpBasic();
-                .formLogin();
-//                .defaultSuccessUrl("/cart",true);
-//                .loginPage("/login").permitAll();
+                .formLogin()
+//                .defaultSuccessUrl("/products",true)
+                .loginPage("/login").permitAll()
+                .and()
+                .rememberMe()
+                .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
+                .key("user")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout","GET"))
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID","remember-me")
+                .logoutSuccessUrl("/login");
     }
 
     @Override
