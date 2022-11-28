@@ -83,7 +83,7 @@
                 <td>${product.getPrice()}</td>
                 <td>${product.getCreationDate()}</td>
                 <td>
-                <form action="/products/cart/delete" method="post">
+                <form action="/cart/delete" method="post">
                     <input type="hidden" name="id" value="${product.getId()}" />
                     <button  type="submit" class="btn btn-success">Delete from cart</button>
                 </form>
