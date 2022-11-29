@@ -27,13 +27,7 @@ public class CartController {
         return "product_cart";
     }
 
-    //    @PostMapping("/cart/{id}")
-//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-//    protected String addToCart(@RequestParam int id) {
-//        cartService.addToCart(id);
-//        return "redirect:/products";
-//    }
-    @PostMapping("/products/cart/{id}")
+    @PostMapping("/cart/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     protected String addToCart(@RequestParam int id) {
         cartService.addToCart(id);
