@@ -37,7 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
                         true,
                         true),
                 new User("admin",
-                        passwordEncoder.encode("2"),
+                        passwordEncoder.encode("admin"),
                         ADMIN.getGrantedAuthorities(),
                         true,
                         true,
