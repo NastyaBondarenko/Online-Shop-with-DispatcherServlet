@@ -7,11 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequestMapping(path = "/cart")
 public class CartController {
     private final CartService cartService;
 
@@ -19,25 +22,25 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping({"/cart"})
+    @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    protected String getAllFromCart(Model model) {
-        List<Product> cart = cartService.getCart();
+    protected String getAllFromCart(Model model, Principal principal) {
+        List<Product> cart = cartService.getCart(principal);
         model.addAttribute("cart", cart);
         return "product_cart";
     }
 
-    @PostMapping("/cart/{id}")
+    @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    protected String addToCart(@RequestParam int id) {
-        cartService.addToCart(id);
+    protected String addToCart(@RequestParam int id, Principal principal) {
+        cartService.addToCart(id, principal);
         return "redirect:/products";
     }
 
-    @PostMapping("/cart/delete")
+    @PostMapping("/delete")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    protected String deleteFromCart(@RequestParam int id) {
-        cartService.deleteFromCart(id);
+    protected String deleteFromCart(@RequestParam int id, Principal principal) {
+        cartService.deleteFromCart(id, principal);
         return "redirect:/cart";
     }
 }

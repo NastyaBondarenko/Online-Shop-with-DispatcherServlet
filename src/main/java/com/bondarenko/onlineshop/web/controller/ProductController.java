@@ -41,14 +41,6 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/products/search")
-    @PreAuthorize("hasRole('ADMIN')")
-    protected String search(@RequestParam String searchText, Model model) {
-        List<Product> products = productService.search(searchText);
-        model.addAttribute("products", products);
-        return "allproducts";
-    }
-
     @GetMapping("/products/delete")
     @PreAuthorize("hasRole('ADMIN')")
     protected String getDeleteProductPage() {
@@ -63,15 +55,23 @@ public class ProductController {
     }
 
     @GetMapping("/products/update")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('admin:update')")
     protected String getUpdateProductPage() {
         return "updateproduct";
     }
 
     @PostMapping("/products/update")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('admin:update')")
     protected String update(@ModelAttribute Product product) {
         productService.update(product);
         return "redirect:/products";
+    }
+
+    @GetMapping("/products/search")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    protected String search(@RequestParam String searchText, Model model) {
+        List<Product> products = productService.search(searchText);
+        model.addAttribute("products", products);
+        return "allproducts";
     }
 }
