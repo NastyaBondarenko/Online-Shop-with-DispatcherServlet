@@ -1,10 +1,10 @@
 package com.bondarenko.onlineshop.service;
 
 import com.bondarenko.onlineshop.entity.Product;
-import com.bondarenko.onlineshop.entity.User;
-import com.bondarenko.onlineshop.security.CurrentUser;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,36 +12,28 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
+@RequiredArgsConstructor
 public class CartService {
-    private final Map<User, List<Product>> userToCartMap = new ConcurrentHashMap<>();
+    private final Map<Principal, List<Product>> mapUserToCart = new ConcurrentHashMap<>();
     private final ProductService productService;
 
-    public CartService(ProductService productService) {
-        this.productService = productService;
+    public List<Product> getCart(Principal principal) {
+        return mapUserToCart.get(principal);
     }
 
-    public List<Product> getCart() {
-        User currentUser = CurrentUser.getCurrentUser();
-        return userToCartMap.get(currentUser);
-    }
-
-    public void addToCart(int id) {
-        User currentUser = CurrentUser.getCurrentUser();
+    public void addToCart(int id, Principal principal) {
         Product product = productService.findById(id).get();
-        List<Product> cart;
-
-        if (userToCartMap.containsKey(currentUser)) {
-            cart = userToCartMap.get(currentUser);
-        } else {
-            cart = new ArrayList<>();
-            userToCartMap.put(currentUser, cart);
-        }
+        List<Product> cart = getProducts(principal);
         cart.add(product);
     }
 
-    public void deleteFromCart(int id) {
-        User currentUser = CurrentUser.getCurrentUser();
-        List<Product> products = userToCartMap.get(currentUser);
-        products.removeIf(product -> Objects.equals(product.getId(), id));
+    public void deleteFromCart(int id, Principal principal) {
+        List<Product> cart = getProducts(principal);
+        cart.removeIf(product -> Objects.equals(product.getId(), id));
+    }
+
+    private List<Product> getProducts(Principal principal) {
+        mapUserToCart.computeIfAbsent(principal, k -> new ArrayList<>());
+        return mapUserToCart.get(principal);
     }
 }
