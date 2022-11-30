@@ -1,6 +1,7 @@
 package com.bondarenko.onlineshop.dao.jdbc;
 
 import com.bondarenko.onlineshop.entity.Product;
+import com.bondarenko.onlineshop.dao.jdbc.repository.impl.ProductRepositoryImpl;
 import com.bondarenko.onlineshop.web.configuration.AppConfiguration;
 import com.bondarenko.onlineshop.web.configuration.WebConfiguration;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = {AppConfiguration.class, WebConfiguration.class})
 public class JdbcProductDaoITest {
     @Autowired
-    private JdbcProductDao jdbcProductDao;
+    private ProductRepositoryImpl jdbcProductDao;
 
     @Test
     @DisplayName("when FindAll then Return Not Null Data")

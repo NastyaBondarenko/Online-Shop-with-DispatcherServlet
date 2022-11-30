@@ -1,11 +1,12 @@
-package com.bondarenko.onlineshop.dao;
+package com.bondarenko.onlineshop.dao.jdbc.repository;
 
 import com.bondarenko.onlineshop.entity.Product;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductDao {
+public interface ProductRepository {
+
     List<Product> findAll();
 
     void add(Product product);

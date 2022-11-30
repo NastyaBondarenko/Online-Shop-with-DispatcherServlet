@@ -1,6 +1,6 @@
-package com.bondarenko.onlineshop.dao.jdbc;
+package com.bondarenko.onlineshop.dao.jdbc.repository.impl;
 
-import com.bondarenko.onlineshop.dao.ProductDao;
+import com.bondarenko.onlineshop.dao.jdbc.repository.ProductRepository;
 import com.bondarenko.onlineshop.dao.jdbc.jdbcTemplate.JdbcTemplate;
 import com.bondarenko.onlineshop.dao.jdbc.mapper.ProductRowMapper;
 import com.bondarenko.onlineshop.entity.Product;
@@ -13,7 +13,8 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class JdbcProductDao implements ProductDao {
+public class ProductRepositoryImpl implements ProductRepository {
+
     private static final String FIND_ALL_SQL = "SELECT id, name, price, creation_date FROM products;";
     private static final String ADD_SQL = "INSERT INTO products (name, price, creation_date) VALUES (?,?,?);";
     private static final String DELETE_SQL = "DELETE FROM products WHERE id=?;";
