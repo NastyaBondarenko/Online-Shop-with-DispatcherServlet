@@ -21,9 +21,9 @@ public class LoginControllerITest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("when Authenticated And Authorized Then Ok Status Returned")
+    @DisplayName("when Get Login Page then Ok Status Returned")
     @WithAnonymousUser()
-    void whenAuthenticatedAndAuthorized_ThenOkStatusReturned() throws Exception {
+    void whenGetLoginPage_thenOkStatusReturned() throws Exception {
         mockMvc.perform(get("/login")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
